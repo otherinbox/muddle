@@ -3,4 +3,6 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), 'lib'))
 
 require "muddle/version"
 
+require "muddle/base"
 require "muddle/parser"
+require "muddle/configuration"
