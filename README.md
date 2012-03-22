@@ -18,7 +18,45 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Muddle provides the `muddled_layout` helper to quickly set up your email layout with all the
+right stuff.  Call this in a view or layout and it will insert the doctype, basic html structure and then yield
+to the following contexts:
+
+* `title` yields inside the title tag
+* `head` yields inside the head tag after the boilerplate style declaration
+* `inside_table` yields inside the wrapping table
+
+Code example:
+
+``` erb
+<% content_for :title do %>
+  The bestest email evar!
+<% end %>
+
+<% content_for :head do %>
+  <%= stylesheet_link_tag :my_prettiness %>
+<% end %>
+
+<% content_for :inside_table do %>
+  <table><tr>
+    <td>This is how composing email SHOULD work</td>
+  </tr></table>
+<% end %>
+
+<%= muddled_layout %>
+```
+
+You can use the layout helper or not - it's up to you.  Whatever you choose, you're now free to build email
+views as you would any other, all you have to do is stick `.muddle` in the view filename.  When your view 
+is rendered, we'll make it work:
+
+* CSS will be inlined using premailer, so you can use `stylesheet_link_tag` as you normally would
+* HTML elements will be augmented with all the attributes they need for email, so you don't need to 
+  worry about ensuring all your anchor tags have `_target` set, etc.
+* The resulting schema will be checked for tags that don't play well in email (like `div`)
+
+For example, if you want to write your views in haml, name your file `bacon.html.email.haml` and you're 
+good to go.
 
 ## Contributing
 
