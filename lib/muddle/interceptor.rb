@@ -1,5 +1,31 @@
-module Muddle::Interceptor
+class Muddle::Interceptor
   def self.delivering_email(message)
-    # Do something with the Mail::Message instance here.
+    new(message).muddle_message
+  end
+
+  def initialize(message)
+    @message = message
+  end
+
+  def muddle_message
+    new_message_body = Muddle::Parser.parse(message_body)
+    replace_message_body(new_message_body)
+    @message
+  end
+
+  def message_body
+    @message_body ||= find_message_body
+  end
+
+  def find_message_body
+    body_location.body
+  end
+
+  def body_location
+    @body_location ||= @message.html_part || @message
+  end
+
+  def replace_message_body(new_message_body)
+    body_location.body = new_message_body
   end
 end
