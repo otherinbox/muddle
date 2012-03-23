@@ -15,7 +15,7 @@ module Muddle
   # Pass it a block and the configuration object will yield 'self'
   #
   def configure(&block)
-    config.configure block
+    yield config
   end
 
   def config
