@@ -8,9 +8,15 @@ class Muddle::Interceptor
   end
 
   def muddle_message
+    return @message unless html_found?
+
     new_message_body = Muddle::Parser.parse(message_body)
     replace_message_body(new_message_body)
     @message
+  end
+
+  def html_found?
+    body_location.content_type =~ /text\/html/
   end
 
   def message_body
