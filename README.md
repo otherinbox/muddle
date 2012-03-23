@@ -67,14 +67,31 @@ end
 ### Not Rails
 
 However you're sending email, you'll want to get what you intend to be the html
-body of your email into a variable. How you do that is up to you. Then you want
-to pass that body to Muddle:
+body of your email into a variable. How you do that is up to you. Say you have
+a [SLIM](http://slim-lang.com) template and you're using
+[Mail](https://github.com/mikel/mail) to build and send your emails:
 
 ```ruby
-muddled_body = Muddle.parse(body)
-```
+require 'muddle'
+require 'slim'
+require 'mail'
 
-Then used the newly muddled body as the html body of your email and send it.
+body = Slim::Template('path/to/welcome_email.html.slim').render
+
+# This is really the only thing Muddle is involved in.
+muddled_body = Muddle.parse(body)
+
+email = Mail.new do
+  to 'some_new_customer@gmail.com'
+  from 'welcome@awesome_web_service.com'
+  subject 'Welcome!!!!!!!!!!1!!!!one!!!'
+
+  html_part do
+    body muddled_body
+    content_type 'text/html; charset=UTF-8'
+  end
+end
+```
 
 ## Contributing
 
