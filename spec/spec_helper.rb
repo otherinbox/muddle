@@ -5,6 +5,7 @@ require 'muddle'
 require 'muddle/interceptor'
 
 require 'mail'
+require 'pry'
 
 def multi_part_email
   Mail.new do
