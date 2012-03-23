@@ -1,55 +1,34 @@
 require 'spec_helper'
-require 'mail'
 
 describe Muddle::Interceptor do
   before(:each) do
     Muddle::Parser.stub!(:parse) { 'muddled email body' }
   end
 
+  subject { Muddle::Interceptor }
+
   context "with a multi-part email" do
-    let(:email) do
-      Mail.new do
-        to 'you@you.com'
-        from 'me@me.com'
-        subject 'Better emails in Rails'
+    let(:email) { multi_part_email }
 
-        html_part do
-          content_type 'text/html; charset=UTF-8'
-          body '<h1>Muddle is awesome!</h1>'
-        end
-
-        text_part do
-          body 'Muddle is pretty cool.'
-        end
-      end
-    end
-
-    subject { Muddle::Interceptor.new(email) }
-
-    describe "#body_location" do
-      it "is the html_part" do
-        subject.body_location.should === email.html_part
-      end
+    it "muddles the html part" do
+      subject.delivering_email(email).html_part.body.should == 'muddled email body'
+      subject.delivering_email(email).text_part.body.should == 'Muddle is pretty cool'
     end
   end
 
   context "with a single-part email" do
-    let(:email) do
-      Mail.new do
-        to 'you@you.com'
-        from 'me@me.com'
-        subject 'Better emails in Rails'
-        content_type 'text/html; charset=UTF-8'
-        body '<h1>Muddle is awesome!</h1>'
-      end
+    let(:email) { html_email }
+
+    it "muddles the email body" do
+      subject.delivering_email(email).body.should == 'muddled email body'
     end
+  end
 
-    subject { Muddle::Interceptor.new(email) }
+  context "with a single-part plaintext email" do
+    let(:email) { plaintext_email }
 
-    describe "#body_location" do
-      it "is the message's body" do
-        subject.body_location.should === email
-      end
+    it "doesn't muddle the email body" do
+      subject.delivering_email(email).body.should == 'Muddle is pretty cool'
     end
   end
 end
