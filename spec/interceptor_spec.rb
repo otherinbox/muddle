@@ -12,7 +12,7 @@ describe Muddle::Interceptor do
 
     it "muddles the html part" do
       subject.delivering_email(email).html_part.body.should == 'muddled email body'
-      subject.delivering_email(email).text_part.body.should == 'Muddle is pretty cool'
+      subject.delivering_email(email).text_part.body.to_s.should == 'Muddle is pretty cool.'
     end
   end
 
@@ -28,7 +28,7 @@ describe Muddle::Interceptor do
     let(:email) { plaintext_email }
 
     it "doesn't muddle the email body" do
-      subject.delivering_email(email).body.should == 'Muddle is pretty cool'
+      subject.delivering_email(email).body.to_s.should == 'Muddle is pretty cool.'
     end
   end
 end
