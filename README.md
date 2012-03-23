@@ -6,7 +6,7 @@ in an email are the exact inverse from those that you should use for a web
 page. Remembering all those differences sucks.
 
 With muddle, we're trying to make it so that the only thing you have to know is
-to *use tables in your emails*. Muddle will take care of the rest. It uses
+to **use tables in your emails**. Muddle will take care of the rest. It uses
 ideas from [HTML Email Boilerplate](http://htmlemailboilerplate.com/) to help
 you get your emails in line without having to know tons about how clients
 render it.
