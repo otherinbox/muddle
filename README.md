@@ -13,7 +13,19 @@ render it.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+### Rails
+
+In your `Gemfile`:
+
+    gem 'muddle', require: 'muddle/rails'
+
+And then execute:
+
+    $ bundle
+
+### Not Rails
+
+Add this line to your application's `Gemfile`:
 
     gem 'muddle'
 
@@ -55,21 +67,13 @@ Code example:
 <%= muddled_layout %>
 ```
 
-You can use the layout helper or not - it's up to you.  Whatever you choose,
-you're now free to build email views as you would any other, all you have to do
-is stick `.muddle` in the view filename.  When your view is rendered, we'll
-make it work:
-
-* CSS will be inlined using premailer, so you can use `stylesheet_link_tag` as
-  you normally would
+* CSS will be inlined using premailer, so you can use external style sheets as
+  you normally would.
 * HTML elements will be augmented with all the attributes they need for email,
   so you don't need to worry about ensuring all your anchor tags have `_target`
   set, etc.
-* The resulting schema will be checked for tags that don't play well in email
-  (like `div`)
-
-For example, if you want to write your views in haml, name your file
-`bacon.html.email.haml` and you're good to go.
+* The resulting html document will be checked for tags that don't play well in
+  email (like `div`).
 
 ## Contributing
 
