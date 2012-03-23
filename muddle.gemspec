@@ -17,4 +17,6 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'email_spec'
+  gem.add_development_dependency 'mail'
+  gem.add_development_dependency 'pry'
 end
