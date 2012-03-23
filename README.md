@@ -14,7 +14,7 @@ render it.
 * CSS will be inlined using premailer, so you can use external style sheets as
   you normally would.
 * HTML elements will be augmented with all the attributes they need for email,
-  so you don't need to worry about ensuring all your anchor tags have `\_target`
+  so you don't need to worry about ensuring all your anchor tags have `_target`
   set, etc.
 * The resulting html document will be checked for tags that don't play well in
   email (like `div`).
