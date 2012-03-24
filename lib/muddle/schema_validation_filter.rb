@@ -1,6 +1,6 @@
 module Muddle
-  class SchemaValidationFilter
-    def filter(body_string)
+  module SchemaValidationFilter
+    def self.filter(body_string)
       body_string
     end
   end

@@ -1,15 +1,45 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Muddle::Parser do
-  it "has a set of filters"
+  it "has a default set of filters" do
+    pr = Muddle::Parser.new
 
-  it "adds filters if config says so"
+    pr.filters.size.should eql(3)
+    pr.filters[0].should eql(Muddle::PremailerFilter)
+    pr.filters[1].should eql(Muddle::EmailBoilerplateFilter)
+    pr.filters[2].should eql(Muddle::SchemaValidationFilter)
+  end
 
-  it "parses a string with the defined filters in the order they're defined"
+  it "only adds filters if config says" do
+    Muddle.config.parse_with_premailer = false
+    Muddle::Parser.new.filters.should_not include(Muddle::PremailerFilter)
 
-  it "parses with premailer"
+    Muddle.config.apply_email_boilerplate = false
+    Muddle::Parser.new.filters.should_not include(Muddle::EmailBoilerplateFilter)
 
-  it "parses with email boilerplate"
+    Muddle.config.validate_html = false
+    Muddle::Parser.new.filters.should_not include(Muddle::SchemaValidationFilter)
+  end
 
-  it "parses with schema validation"
+  context "with single parser enabled" do
+    before(:each) do
+      Muddle.configure do |config|
+        config.parse_with_premailer = false
+        config.apply_email_boilerplate = false
+        config.validate_html = false
+      end
+    end
+
+    it "parses with premailer" do
+      Muddle.config.parse_with_premailer = true
+      result = Muddle::Parser.new.parse("A String")
+
+      result.should be_true
+      result.should be_a(String)
+    end
+
+    it "parses with email boilerplate"
+
+    it "parses with schema validation"
+  end
 end

@@ -7,6 +7,14 @@ require 'muddle/interceptor'
 require 'mail'
 require 'pry'
 
+RSpec.configure do |config|
+  config.before(:each) do
+    # Reset global state - probably a better way to do this?
+    Muddle.config.send :initialize
+    Muddle.parser.send :initialize
+  end
+end
+
 def multi_part_email
   Mail.new do
     to 'you@you.com'

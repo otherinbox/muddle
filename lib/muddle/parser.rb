@@ -12,7 +12,7 @@ module Muddle
 
       @filters << Muddle::PremailerFilter if config.parse_with_premailer
       @filters << Muddle::EmailBoilerplateFilter if config.apply_email_boilerplate
-      @filters << Muddle::SchemaValidationFilter if validate_html
+      @filters << Muddle::SchemaValidationFilter if config.validate_html
     end
 
     # Parse an email body

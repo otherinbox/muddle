@@ -4,6 +4,8 @@ module Muddle
     attr_accessor :apply_email_boilerplate
     attr_accessor :validate_html
     attr_accessor :generate_plain_text
+    
+    attr_accessor :premailer
 
     # Initialize the configuration object with default values
     #
@@ -14,6 +16,16 @@ module Muddle
       @apply_email_boilerplate = true
       @validate_html = true
       @generate_plain_text = false
+
+      # NOTE: when this tries to inline CSS, all it sees is a stylesheet URL
+      # This may require that we download css from the interwebs @ each render 
+      # pass of a mailer ?!?!?
+      @premailer = {
+        #:base_url => root_url, # Put in rails stuff...
+        :remove_comments => true, # Env-dependent?
+        :with_html_string => true,
+        :adapter => :nokogiri
+      }
 
       if block_given?
         configure &block
