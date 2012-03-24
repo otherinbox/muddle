@@ -6,7 +6,7 @@ describe Muddle do
   end
 
   it "parses" do
-    Muddle.parser.parse("A string").should be_true
+    Muddle.parse("A string").should be_true
   end
 
   it "has a config with default options" do

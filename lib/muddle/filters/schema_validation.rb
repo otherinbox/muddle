@@ -1,9 +1,7 @@
 module Muddle
   module SchemaValidationFilter
     def self.filter(body_string)
-      doc = Nokogiri::HTML(body_string)
-
-      doc.serialize
+      body_string
     end
   end
 end

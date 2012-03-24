@@ -3,6 +3,21 @@ require 'spec_helper'
 describe Muddle::BoilerplateAttributesFilter do
   let(:baf) { Muddle::BoilerplateAttributesFilter }
 
+  it "can parse full documents" do
+    email = <<-EMAIL
+      !DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"&gt;
+      <html xmlns="http://www.w3.org/1999/xhtml">
+        <body>
+          <table>hey</table>
+        </body>
+      </html>'
+      EMAIL
+    output = baf.filter(email)
+    output.should have_xpath('//table[@cellpadding="0"]')
+    output.should have_xpath('//table[@cellspacing="0"]')
+    output.should have_xpath('//table[@border="0"]')
+    output.should have_xpath('//table[@align="center"]')
+  end
 
   describe "table attributes" do
     # NOTE: Should these be CSS-aware?

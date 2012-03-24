@@ -17,13 +17,13 @@ end
 
 RSpec::Matchers.define :have_css do |attribute|
   match do |model|
-    Nokogiri::XML::DocumentFragment.parse(model).css(attribute).empty?
+    !Nokogiri::XML::DocumentFragment.parse(model).css(attribute).empty?
   end
 end
 
 RSpec::Matchers.define :have_xpath do |attribute|
   match do |model|
-    Nokogiri::XML::DocumentFragment.parse(model).xpath(attribute).empty?
+    !Nokogiri::XML::DocumentFragment.parse(model).xpath(attribute).empty?
   end
 end
 
