@@ -21,6 +21,12 @@ RSpec::Matchers.define :have_css do |attribute|
   end
 end
 
+RSpec::Matchers.define :have_xpath do |attribute|
+  match do |model|
+    Nokogiri::XML::DocumentFragment.parse(model).xpath(attribute).empty?
+  end
+end
+
 def multi_part_email
   Mail.new do
     to 'you@you.com'
