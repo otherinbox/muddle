@@ -5,6 +5,7 @@ describe Muddle::Configuration do
     config = Muddle::Configuration.new
 
     config.parse_with_premailer.should be_true
+    config.insert_boilerplate_styles.should be_true
     config.apply_email_boilerplate.should be_true
     config.validate_html.should be_true
     config.generate_plain_text.should be_false
@@ -19,6 +20,7 @@ describe Muddle::Configuration do
   it "accepts a block at instantiation and sets options" do
     config = Muddle::Configuration.new do |config|
       config.parse_with_premailer = false
+      config.insert_boilerplate_styles = false
       config.apply_email_boilerplate = false
       config.validate_html = false
       config.generate_plain_text = true
@@ -26,6 +28,7 @@ describe Muddle::Configuration do
     end
 
     config.parse_with_premailer.should be_false
+    config.insert_boilerplate_styles.should be_false
     config.apply_email_boilerplate.should be_false
     config.validate_html.should be_false
     config.generate_plain_text.should be_true
@@ -41,6 +44,7 @@ describe Muddle::Configuration do
     config = Muddle::Configuration.new
     config.configure do |config|
       config.parse_with_premailer = false
+      config.insert_boilerplate_styles = false
       config.apply_email_boilerplate = false
       config.validate_html = false
       config.generate_plain_text = true
@@ -48,6 +52,7 @@ describe Muddle::Configuration do
     end
 
     config.parse_with_premailer.should be_false
+    config.insert_boilerplate_styles.should be_false
     config.apply_email_boilerplate.should be_false
     config.validate_html.should be_false
     config.generate_plain_text.should be_true

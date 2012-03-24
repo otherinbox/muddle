@@ -11,7 +11,8 @@ module Muddle
       @filters = []
 
       @filters << Muddle::PremailerFilter if config.parse_with_premailer
-      @filters << Muddle::EmailBoilerplateFilter if config.apply_email_boilerplate
+      @filters << Muddle::BoilerplateStyleElementFilter if config.insert_boilerplate_styles
+      @filters << Muddle::BoilerplateCSSFilter if config.apply_email_boilerplate
       @filters << Muddle::SchemaValidationFilter if config.validate_html
     end
 

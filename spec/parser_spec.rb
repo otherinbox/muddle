@@ -4,18 +4,22 @@ describe Muddle::Parser do
   it "has a default set of filters" do
     pr = Muddle::Parser.new
 
-    pr.filters.size.should eql(3)
+    pr.filters.size.should eql(4)
     pr.filters[0].should eql(Muddle::PremailerFilter)
-    pr.filters[1].should eql(Muddle::EmailBoilerplateFilter)
-    pr.filters[2].should eql(Muddle::SchemaValidationFilter)
+    pr.filters[1].should eql(Muddle::BoilerplateStyleElementFilter)
+    pr.filters[2].should eql(Muddle::BoilerplateCSSFilter)
+    pr.filters[3].should eql(Muddle::SchemaValidationFilter)
   end
 
   it "only adds filters if config says" do
     Muddle.config.parse_with_premailer = false
     Muddle::Parser.new.filters.should_not include(Muddle::PremailerFilter)
 
+    Muddle.config.insert_boilerplate_styles = false
+    Muddle::Parser.new.filters.should_not include(Muddle::BoilerplateStyleElementFilter)
+
     Muddle.config.apply_email_boilerplate = false
-    Muddle::Parser.new.filters.should_not include(Muddle::EmailBoilerplateFilter)
+    Muddle::Parser.new.filters.should_not include(Muddle::BoilerplateCSSFilter)
 
     Muddle.config.validate_html = false
     Muddle::Parser.new.filters.should_not include(Muddle::SchemaValidationFilter)

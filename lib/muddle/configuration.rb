@@ -1,6 +1,7 @@
 module Muddle
   class Configuration
     attr_accessor :parse_with_premailer
+    attr_accessor :insert_boilerplate_styles
     attr_accessor :apply_email_boilerplate
     attr_accessor :validate_html
     attr_accessor :generate_plain_text
@@ -13,6 +14,7 @@ module Muddle
     #     
     def initialize(&block)
       @parse_with_premailer = true
+      @insert_boilerplate_styles = true
       @apply_email_boilerplate = true
       @validate_html = true
       @generate_plain_text = false

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Muddle::EmailBoilerplateFilter do
-  let(:ebf) { Muddle::EmailBoilerplateFilter }
+describe Muddle::BoilerplateCSSFilter do
+  let(:ebf) { Muddle::BoilerplateCSSFilter }
 
   describe "body attributes" do
     it "sets the attribute if missing" do
@@ -119,8 +119,4 @@ describe Muddle::EmailBoilerplateFilter do
   # I have no idea how to inline that...
   # Applies to a and h a
   # for now just including it in the style decl below
-
-  it "inserts a style declaration for non-inlined styles if <head> found" do
-    ebf.filter('<html><head></head></html>').should have_css('style')
-  end
 end

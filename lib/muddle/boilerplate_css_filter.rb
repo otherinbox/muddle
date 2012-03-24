@@ -1,7 +1,7 @@
 require 'nokogiri'
 
 module Muddle
-  module EmailBoilerplateFilter
+  module BoilerplateCSSFilter
     def self.filter(body_string)
       doc = Nokogiri::XML::DocumentFragment.parse(body_string)
 
@@ -32,8 +32,6 @@ module Muddle
       # a attributes
       ensure_style_includes(doc, 'a', 'color', 'blue')
 
-      insert_style_block(doc)
-
       doc.to_xhtml
     end
 
@@ -41,20 +39,6 @@ module Muddle
       doc.css("#{element_selector}:not([style*=#{css_attribute}])").each do |node|
         node['style'] = "#{node['style']} #{css_attribute}:#{default_value};"
       end
-    end
-
-    def self.insert_style_block(doc)
-      doc.css("head").first do |head|
-        if head.css("style")
-          head.css("style").first.add_before('style').content(boilerplate_css)
-        else
-          head.add_child('style').content(boilerplate_css)
-        end
-      end
-    end
-
-    def self.boilerplate_css
-      @boilerplate_css ||= File.read('email_boilerplate.css')
     end
   end
 end
