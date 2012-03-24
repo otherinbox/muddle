@@ -12,7 +12,8 @@ module Muddle
 
       @filters << Muddle::PremailerFilter if config.parse_with_premailer
       @filters << Muddle::BoilerplateStyleElementFilter if config.insert_boilerplate_styles
-      @filters << Muddle::BoilerplateCSSFilter if config.apply_email_boilerplate
+      @filters << Muddle::BoilerplateCSSFilter if config.insert_boilerplate_css
+      @filters << Muddle::BoilerplateAttributesFilter if config.insert_boilerplate_attributes
       @filters << Muddle::SchemaValidationFilter if config.validate_html
     end
 

@@ -6,7 +6,8 @@ describe Muddle::Configuration do
 
     config.parse_with_premailer.should be_true
     config.insert_boilerplate_styles.should be_true
-    config.apply_email_boilerplate.should be_true
+    config.insert_boilerplate_css.should be_true
+    config.insert_boilerplate_attributes.should be_true
     config.validate_html.should be_true
     config.generate_plain_text.should be_false
     
@@ -21,7 +22,8 @@ describe Muddle::Configuration do
     config = Muddle::Configuration.new do |config|
       config.parse_with_premailer = false
       config.insert_boilerplate_styles = false
-      config.apply_email_boilerplate = false
+      config.insert_boilerplate_css = false
+      config.insert_boilerplate_attributes = false
       config.validate_html = false
       config.generate_plain_text = true
       config.premailer[:line_length] = 50
@@ -29,7 +31,8 @@ describe Muddle::Configuration do
 
     config.parse_with_premailer.should be_false
     config.insert_boilerplate_styles.should be_false
-    config.apply_email_boilerplate.should be_false
+    config.insert_boilerplate_css.should be_false
+    config.insert_boilerplate_attributes.should be_false
     config.validate_html.should be_false
     config.generate_plain_text.should be_true
     config.premailer.should eql({
@@ -45,7 +48,8 @@ describe Muddle::Configuration do
     config.configure do |config|
       config.parse_with_premailer = false
       config.insert_boilerplate_styles = false
-      config.apply_email_boilerplate = false
+      config.insert_boilerplate_css = false
+      config.insert_boilerplate_attributes = false
       config.validate_html = false
       config.generate_plain_text = true
       config.premailer[:line_length] = 50
@@ -53,7 +57,8 @@ describe Muddle::Configuration do
 
     config.parse_with_premailer.should be_false
     config.insert_boilerplate_styles.should be_false
-    config.apply_email_boilerplate.should be_false
+    config.insert_boilerplate_css.should be_false
+    config.insert_boilerplate_attributes.should be_false
     config.validate_html.should be_false
     config.generate_plain_text.should be_true
     config.premailer.should eql({

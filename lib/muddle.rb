@@ -3,11 +3,11 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), 'lib'))
 
 require "muddle/version"
 
-require "muddle/premailer_filter"
-require "muddle/boilerplate_style_element_filter"
-require "muddle/boilerplate_css_filter"
-require "muddle/boilerplate_attributes_filter"
-require "muddle/schema_validation_filter"
+require "muddle/filters/premailer"
+require "muddle/filters/boilerplate_style_element"
+require "muddle/filters/boilerplate_css"
+require "muddle/filters/boilerplate_attributes"
+require "muddle/filters/schema_validation"
 require "muddle/parser"
 require "muddle/configuration"
 
