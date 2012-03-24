@@ -15,6 +15,12 @@ RSpec.configure do |config|
   end
 end
 
+RSpec::Matchers.define :have_css do |attribute|
+  match do |model|
+    Nokogiri::XML::DocumentFragment.parse(model).css(attribute).empty?
+  end
+end
+
 def multi_part_email
   Mail.new do
     to 'you@you.com'
