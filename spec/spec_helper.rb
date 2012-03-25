@@ -6,25 +6,36 @@ require 'muddle/interceptor'
 
 require 'mail'
 require 'pry'
+require 'logger'
 
 RSpec.configure do |config|
   config.before(:each) do
     # Reset global state - probably a better way to do this?
     Muddle.config.send :initialize
     Muddle.parser.send :initialize
-  end
-end
 
-RSpec::Matchers.define :have_css do |attribute|
-  match do |model|
-    !Nokogiri::XML::DocumentFragment.parse(model).css(attribute).empty?
+    # Set up logging
+    @log = StringIO.new
+    @logger = Logger.new @log
+
+    # NOTE: I'm sure there's a better way to do this
+    # based on https://gist.github.com/1057540
+    Muddle.send(:class_variable_set, :@@logger, @logger)
+  end
+
+  def log
+    @log.string
   end
 end
 
 RSpec::Matchers.define :have_xpath do |attribute|
   match do |model|
-    !Nokogiri::XML::DocumentFragment.parse(model).xpath(attribute).empty?
+    !Nokogiri::HTML(model).xpath(attribute).empty?
   end
+end
+
+def xpath(string, selector)
+  Nokogiri::HTML(string).xpath(selector)
 end
 
 def multi_part_email

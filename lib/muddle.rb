@@ -12,6 +12,14 @@ require "muddle/parser"
 require "muddle/configuration"
 
 module Muddle
+  # Set up logging
+  # NOTE: this should probably check for rails logger
+  #
+  @@logger = nil
+  def self.logger
+    @@logger ||= Logger.new $stdout
+  end
+
   # Top-level configuration function
   #
   # Pass it a block and the configuration object will yield 'self'

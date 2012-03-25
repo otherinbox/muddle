@@ -21,7 +21,7 @@ module Muddle
     end
 
     def self.boilerplate_css
-      @boilerplate_css ||= File.read('email_boilerplate.css')
+      @boilerplate_css ||= File.read('../resources/boilerplate_style.css')
     end
   end
 end

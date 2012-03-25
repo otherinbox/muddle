@@ -5,9 +5,9 @@ describe Muddle::Parser do
     pr = Muddle::Parser.new
 
     pr.filters.size.should eql(5)
-    pr.filters[0].should eql(Muddle::PremailerFilter)
-    pr.filters[1].should eql(Muddle::BoilerplateStyleElementFilter)
-    pr.filters[2].should eql(Muddle::BoilerplateCSSFilter)
+    pr.filters[0].should eql(Muddle::BoilerplateCSSFilter)
+    pr.filters[1].should eql(Muddle::PremailerFilter)
+    pr.filters[2].should eql(Muddle::BoilerplateStyleElementFilter)
     pr.filters[3].should eql(Muddle::BoilerplateAttributesFilter)
     pr.filters[4].should eql(Muddle::SchemaValidationFilter)
   end

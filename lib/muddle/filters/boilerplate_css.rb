@@ -2,43 +2,60 @@ require 'nokogiri'
 
 module Muddle
   module BoilerplateCSSFilter
+    # Boilerplate CSS Filter
+    #
+    # Inserts a style tag containing the boilerplate CSS - we assume that this will
+    # later be filtered with the Premailer filter and inlined at that time.  
+    #
+    # If the body_string doesn't look like an HTML file, we'll build as much structure
+    # as makes sense in the context of a style tag (ie at least enclosing <html> and <head> tags)
+    #
+    # The style tag will be inserted before any existing style tags so that any user-supplied
+    # CSS will over-write our boilerplate stuff
+    #
     def self.filter(body_string)
-      doc = Nokogiri::XML::DocumentFragment.parse(body_string)
+      doc = Nokogiri::HTML(body_string)
 
-      # body attributes
-      ensure_style_includes(doc, 'body', 'width', '100% !important')
-      ensure_style_includes(doc, 'body', '-webkit-text-size-adjustment', '100%')
-      ensure_style_includes(doc, 'body', '-ms-text-size-adjustment', '100%')
-      ensure_style_includes(doc, 'body', 'margin', '0')
-      ensure_style_includes(doc, 'body', 'padding', '0')
-
-      # img attributes
-      ensure_style_includes(doc, 'img', 'outline', 'none')
-      ensure_style_includes(doc, 'img', 'text-decoration', 'none')
-      ensure_style_includes(doc, 'img', '-ms-interpolation-mode', 'bicubic')
-
-      # a img attributes
-      ensure_style_includes(doc, 'a img', 'border', 'none')
-
-      # p attributes
-      ensure_style_includes(doc, 'p', 'margin', '1em 0')
-
-      # h attributes
-      ensure_style_includes(doc, 'h1,h2,h3,h4,h5,h6', 'color', 'black !important')
-
-      # h a attributes
-      ensure_style_includes(doc, 'h1 a,h2 a,h3 a,h4 a,h5 a,h6 a', 'color', 'blue !important')
-
-      # a attributes
-      ensure_style_includes(doc, 'a', 'color', 'blue')
+      if style_node = doc.xpath('head/style').first
+        add_style_tag_before(style_node)
+      elsif head_node = doc.xpath('head').first
+        add_style_tag_to(head_node)
+      elsif html_node = doc.xpath('html').first
+        head_node = html_node.add_child('<head></head>').first
+        add_style_tag_to(head_node) 
+      else
+        raise "HTML Parsing error - <html> element not found"
+      end
 
       doc.to_xhtml
     end
 
-    def self.ensure_style_includes(doc, element_selector, css_attribute, default_value)
-      doc.css("#{element_selector}:not([style*=#{css_attribute}])").each do |node|
-        node['style'] = "#{node['style']} #{css_attribute}:#{default_value};"
+    # Insert the style tag before the passed node
+    #
+    def self.add_style_tag_before(style_node)
+      new_style_node = style_node.add_previous_sibling('<style type="text/css"></style>').first
+      build_style_tag_with(new_style_node)
+    end
+
+    # Insert the style tag as a child of the passed node
+    #
+    def self.add_style_tag_to(head_node)
+      if first_child = head_node.first_element_child
+        add_style_tag_before(first_child)
+      else
+        style_node = head_node.add_child('<style type="text/css"></style>').first
+        build_style_tag_with(style_node)
       end
+    end
+
+    # Insert the CSS content
+    #
+    def self.build_style_tag_with(style_node)
+      style_node.content = boilerplate_css
+    end
+
+    def self.boilerplate_css
+      @boilerplate_css ||= File.read(File.join(File.dirname(__FILE__), '..', 'resources', 'boilerplate_inline.css'))
     end
   end
 end
