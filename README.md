@@ -155,6 +155,18 @@ Muddle will spit out this:
 ... Or whatever the output would really be that we'll paste in here when Muddle
 actually produces output.
 
+## To Do
+
+* handle Doctype correctly
+* parser tests using sample emails
+* naughty tag warnings
+* fix rails integration tests
+* Rails logging integration
+* handle filters returning Nokigiri document? (reduces HTML parsing)
+* performance tests
+* improve README
+
+
 ## Contributing
 
 1. Fork it
