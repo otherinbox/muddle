@@ -1,5 +1,6 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), 'resources'))
 
 require 'muddle'
 require 'muddle/interceptor'
@@ -72,4 +73,8 @@ def plaintext_email
     subject 'Better emails in Rails'
     body 'Muddle is pretty cool.'
   end
+end
+
+def minimal_email_body
+  File.read(File.join(File.dirname(__FILE__), 'resources', 'minimal_email.html'))
 end

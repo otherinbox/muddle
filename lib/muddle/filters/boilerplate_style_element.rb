@@ -3,7 +3,7 @@ require 'nokogiri'
 module Muddle
   module BoilerplateStyleElementFilter
     def self.filter(body_string)
-      doc = Nokogiri::XML::DocumentFragment.parse(body_string)
+      doc = Nokogiri::HTML(body_string)
       
       insert_style_block(doc)
 
@@ -11,17 +11,15 @@ module Muddle
     end
 
     def self.insert_style_block(doc)
-      doc.css("head").first do |head|
-        if head.css("style")
-          head.css("style").first.add_before('style').content(boilerplate_css)
-        else
-          head.add_child('style').content(boilerplate_css)
-        end
+      if style_node = doc.xpath("//head/style").first
+        style_node.add_previous_sibling('<style type="text/css"></style>').first.content = boilerplate_css
+      elsif head_node = doc.xpath("//head").first
+        head_node.add_child('<style type="text/css"></style>').first.content = boilerplate_css
       end
     end
 
     def self.boilerplate_css
-      @boilerplate_css ||= File.read('../resources/boilerplate_style.css')
+      @boilerplate_css ||= File.read(File.join(File.dirname(__FILE__), '..', 'resources', 'boilerplate_style.css'))
     end
   end
 end

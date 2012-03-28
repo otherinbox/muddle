@@ -161,6 +161,7 @@ actually produces output.
 * parser tests using sample emails
 * naughty tag warnings
 * fix rails integration tests
+* build example Rails app, test integration with actual mailers
 * Rails logging integration
 * handle filters returning Nokigiri document? (reduces HTML parsing)
 * performance tests

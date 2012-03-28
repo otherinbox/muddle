@@ -4,19 +4,16 @@ describe Muddle::BoilerplateAttributesFilter do
   let(:f) { Muddle::BoilerplateAttributesFilter }
 
   it "can parse full documents" do
-    email = <<-EMAIL
-      !DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"&gt;
-      <html xmlns="http://www.w3.org/1999/xhtml">
-        <body>
-          <table>hey</table>
-        </body>
-      </html>'
-      EMAIL
-    output = f.filter(email)
+    output = f.filter(minimal_email_body)
+
     output.should have_xpath('//table[@cellpadding="0"]')
     output.should have_xpath('//table[@cellspacing="0"]')
     output.should have_xpath('//table[@border="0"]')
     output.should have_xpath('//table[@align="center"]')
+
+    output.should have_xpath('//td[@valign="top"]')
+    
+    output.should have_xpath('//a[@target="_blank"]')
   end
 
   describe "table attributes" do

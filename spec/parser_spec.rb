@@ -29,27 +29,26 @@ describe Muddle::Parser do
     Muddle::Parser.new.filters.should_not include(Muddle::SchemaValidationFilter)
   end
 
-  context "with single parser enabled" do
+  describe "with default options" do
     before(:each) do
-      Muddle.configure do |config|
-        config.parse_with_premailer = false
-        config.insert_boilerplate_styles = false
-        config.insert_boilerplate_css = false
-        config.insert_boilerplate_attributes = false
-        config.validate_html = false
-      end
+      @output = Muddle.parse(minimal_email_body)
     end
 
-    it "parses with premailer" do
-      Muddle.config.parse_with_premailer = true
-      result = Muddle::Parser.new.parse("A String")
-
-      result.should be_true
-      result.should be_a(String)
+    it "displays the output" do
+      puts '--------'
+      puts @output
+      puts '--------'
     end
 
-    it "parses with email boilerplate"
-
-    it "parses with schema validation"
+    it "retains the document structure" do
+      @output.should have_xpath('/html')
+      @output.should have_xpath('/html/head')
+      @output.should have_xpath('/html/head/title')
+      @output.should have_xpath('/html/head/style')
+      @output.should have_xpath('/html/body')
+      @output.should have_xpath('/html/body/table')
+      @output.should have_xpath('/html/body/table/tr')
+      @output.should have_xpath('/html/body/table/tr/td')
+    end
   end
 end

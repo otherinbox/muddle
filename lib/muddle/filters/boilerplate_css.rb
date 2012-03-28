@@ -16,9 +16,9 @@ module Muddle
     def self.filter(body_string)
       doc = Nokogiri::HTML(body_string)
 
-      if style_node = doc.xpath('head/style').first
+      if style_node = doc.xpath('//head/style').first
         add_style_tag_before(style_node)
-      elsif head_node = doc.xpath('head').first
+      elsif head_node = doc.xpath('//head').first
         add_style_tag_to(head_node)
       elsif html_node = doc.xpath('html').first
         head_node = html_node.add_child('<head></head>').first
