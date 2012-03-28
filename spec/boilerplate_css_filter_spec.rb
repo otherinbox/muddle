@@ -11,24 +11,14 @@ describe Muddle::BoilerplateCSSFilter do
     xpath(output, 'html/head/style[@type="text/css"]').first.content.should include('Boilerplate CSS for Inlining')
   end
 
-  it "adds <html>, <head> and a <style> tag if needed" do
-    email = "<h1>foo</h1>"
+  it "adds <head> and a <style> tag if needed" do
+    email = "<html><body><h1>foo</h1><body></html>"
  
     output = f.filter(email)
 
-    xpath(output, 'html').should be_true
-    xpath(output, 'html/head').should be_true
-    xpath(output, 'html/head/style[@type="text/css"]').should be_true
-    xpath(output, 'html/head/style[@type="text/css"]').first.content.should include('Boilerplate CSS for Inlining')
-  end
-
-  it "adds <head> and <style> tags if needed" do
-    email = "<html><h1>foo</h1></html>"
-
-    output = f.filter(email)
-
-    xpath(output, 'html/head').should be_true
-    xpath(output, 'html/head/style[@type="text/css"]').should be_true
+    output.should have_xpath('html')
+    output.should have_xpath('html/head')
+    output.should have_xpath('html/head/style[@type="text/css"]')
     xpath(output, 'html/head/style[@type="text/css"]').first.content.should include('Boilerplate CSS for Inlining')
   end
 

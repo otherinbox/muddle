@@ -12,7 +12,7 @@ describe Muddle do
   end
 
   it "parses" do
-    Muddle.parse("A string").should be_true
+    Muddle.parse("<html><body>A string</body></html>").should be_true
   end
 
   it "has a config with default options" do
@@ -23,7 +23,7 @@ describe Muddle do
     Muddle.config.premailer.should eql({
       :remove_comments => true,
       :with_html_string => true,
-      :adapter => :nokogiri
+      :adapter => :hpricot
     })
   end
   
@@ -43,7 +43,7 @@ describe Muddle do
     Muddle.config.premailer.should eql({
       :remove_comments => true,
       :with_html_string => true,
-      :adapter => :nokogiri,
+      :adapter => :hpricot,
       :line_length => 50
     })
   end

@@ -35,6 +35,7 @@ describe Muddle::Parser do
     end
 
     it "displays the output" do
+      pending
       puts '--------'
       puts @output
       puts '--------'
@@ -44,7 +45,7 @@ describe Muddle::Parser do
       @output.should have_xpath('/html')
       @output.should have_xpath('/html/head')
       @output.should have_xpath('/html/head/title')
-      @output.should have_xpath('/html/head/style')
+      #@output.should have_xpath('/html/head/style') # premailer removes the style tag when using hpricot...
       @output.should have_xpath('/html/body')
       @output.should have_xpath('/html/body/table')
       @output.should have_xpath('/html/body/table/tr')

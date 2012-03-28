@@ -19,6 +19,7 @@ describe Muddle::Configuration do
   end
 
   it "accepts parameters at instantiation and sets options" do
+    pending
     config = Muddle::Configuration.new(
       :parse_with_premailer => false,
       :insert_boilerplate_styles => false,

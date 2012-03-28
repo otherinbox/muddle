@@ -47,7 +47,7 @@ def multi_part_email
 
     html_part do
       content_type 'text/html; charset=UTF-8'
-      body '<h1>Muddle is awesome!</h1>'
+      body '<html><body><h1>Muddle is awesome!</h1></body></html>'
     end
 
     text_part do
@@ -62,7 +62,7 @@ def html_email
     from 'me@me.com'
     subject 'Better emails in Rails'
     content_type 'text/html; charset=UTF-8'
-    body '<h1>Muddle is awesome!</h1>'
+    body '<html><body><h1>Muddle is awesome!</h1></body></html>'
   end
 end
 
