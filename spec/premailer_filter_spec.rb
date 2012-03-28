@@ -1,7 +1,14 @@
 require 'spec_helper'
 
 describe Muddle::PremailerFilter do
-  let(:pmf) { Muddle::PremailerFilter }
+  let(:f) { Muddle::PremailerFilter }
+
+  it "can parse full documents" do
+    output = f.filter(minimal_email_body)
+
+    output.should have_xpath('//a[@class="inlineme"]')
+  end
+
 
   it "uses config" do
     Muddle.configure do |config|
@@ -13,16 +20,16 @@ describe Muddle::PremailerFilter do
     Premailer.should_receive(:new).with("A string", {
       :remove_comments => true,
       :with_html_string => true,
-      :adapter => :nokogiri,
+      :adapter => :hpricot,
       :line_length => 50
     }).and_return premailer
 
-    pmf.filter("A string")
+    f.filter("A string")
   end
 
   it "filters a string" do
-    pmf.filter("A string").should be_true
-    pmf.filter("A string").should be_a(String)
+    f.filter("A string").should be_true
+    f.filter("A string").should be_a(String)
   end
 
   it "removes comments"

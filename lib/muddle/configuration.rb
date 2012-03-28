@@ -27,7 +27,7 @@ class Muddle::Configuration
       #:base_url => root_url, # Put in rails stuff...
       :remove_comments => true, # Env-dependent?
       :with_html_string => true,
-      :adapter => :nokogiri
+      :adapter => :hpricot
     }
 
     if block_given?

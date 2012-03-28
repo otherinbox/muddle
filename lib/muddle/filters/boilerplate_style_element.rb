@@ -3,7 +3,7 @@ require 'nokogiri'
 module Muddle
   module BoilerplateStyleElementFilter
     def self.filter(body_string)
-      doc = Nokogiri::HTML(body_string)
+      doc = Nokogiri::XML(body_string)
       
       insert_style_block(doc)
 

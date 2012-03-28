@@ -14,7 +14,7 @@ describe Muddle::Configuration do
     config.premailer.should eql({
       :remove_comments => true,
       :with_html_string => true,
-      :adapter => :nokogiri
+      :adapter => :hpricot
     })
   end
 
@@ -38,7 +38,7 @@ describe Muddle::Configuration do
     config.premailer.should eql({
       :remove_comments => true,
       :with_html_string => true,
-      :adapter => :nokogiri,
+      :adapter => :hpricot,
       :line_length => 50
     })
   end
@@ -64,7 +64,7 @@ describe Muddle::Configuration do
     config.premailer.should eql({
       :remove_comments => true,
       :with_html_string => true,
-      :adapter => :nokogiri,
+      :adapter => :hpricot,
       :line_length => 50
     })
   end
@@ -90,7 +90,7 @@ describe Muddle::Configuration do
     config.premailer.should eql({
       :remove_comments => true,
       :with_html_string => true,
-      :adapter => :nokogiri,
+      :adapter => :hpricot,
       :line_length => 50
     })
   end

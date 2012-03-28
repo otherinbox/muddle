@@ -3,7 +3,7 @@ require 'nokogiri'
 module Muddle
   module BoilerplateAttributesFilter
     def self.filter(body_string)
-      doc = Nokogiri::HTML(body_string)
+      doc = Nokogiri::XML(body_string)
       
       ensure_node_includes(doc, 'table', 'cellpadding', '0')
       ensure_node_includes(doc, 'table', 'cellspacing', '0')

@@ -14,7 +14,7 @@ module Muddle
     # CSS will over-write our boilerplate stuff
     #
     def self.filter(body_string)
-      doc = Nokogiri::HTML(body_string)
+      doc = Nokogiri::XML(body_string)
 
       if style_node = doc.xpath('//head/style').first
         add_style_tag_before(style_node)
