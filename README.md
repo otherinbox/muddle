@@ -143,7 +143,7 @@ Muddle will spit out this:
     </table>
 
     <style type="text/css">
-      /* Boilerplate CSS for HEAD */
+      /* Boilerplate CSS for BODY */
 
       #outlook a {padding:0;}
       #backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
@@ -183,7 +183,8 @@ Muddle will spit out this:
           cursor: default;
         }
       }
-      </style><style type="text/css">
+    </style>
+    <style type="text/css">
       body { width: 100% !important; -webkit-text-size-adjust: 100% !important; -ms-text-size-adjust: 100% !important; margin: 0 !important; padding: 0 !important; }
       img { outline: none !important; text-decoration: none !important; -ms-interpolation-mode: bicubic !important; }
     </style>
