@@ -1,12 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Muddle do
-  it "should define the logger method to access a global Logger instance" do
-    Muddle.should respond_to(:logger)
-    Muddle.logger.should be_an_instance_of(Logger)
-    Muddle.logger.object_id.should == @logger.object_id
-  end
-
   it "has a parser object" do
     Muddle.parser.should be_a(Muddle::Parser)
   end

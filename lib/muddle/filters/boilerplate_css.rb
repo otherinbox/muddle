@@ -16,9 +16,15 @@ module Muddle
     def self.filter(body_string)
       doc = Nokogiri::XML(body_string)
 
-      if style_node = doc.xpath('//head/style').first
+      insert_styles_to_inline(doc)
+
+      doc.to_xhtml
+    end
+
+    def self.insert_styles_to_inline(doc)
+      if style_node = doc.xpath('html/head/style').first
         add_style_tag_before(style_node)
-      elsif head_node = doc.xpath('//head').first
+      elsif head_node = doc.xpath('html/head').first
         add_style_tag_to(head_node)
       elsif html_node = doc.xpath('html').first
         head_node = html_node.first_element_child.add_previous_sibling('<head></head>').first
@@ -26,8 +32,6 @@ module Muddle
       else
         raise "HTML Parsing error - <html> element not found"
       end
-
-      doc.to_xhtml
     end
 
     # Insert the style tag before the passed node
