@@ -124,6 +124,7 @@ For example, if you have a template the ends up like this:
 ```
 
 Muddle will spit out this:
+
 ```html
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
