@@ -9,6 +9,7 @@ describe Muddle::BoilerplateCSSFilter do
     xpath(output, '//head').count.should eql(1)
     xpath(output, '//style').count.should eql(2)
     xpath(output, 'html/head/style[@type="text/css"]').first.content.should include('Boilerplate CSS for Inlining')
+    output.should have_xpath('/html/body/preceding-sibling::head')
   end
 
   it "adds <head> and a <style> tag if needed" do
@@ -20,6 +21,7 @@ describe Muddle::BoilerplateCSSFilter do
     output.should have_xpath('html/head')
     output.should have_xpath('html/head/style[@type="text/css"]')
     xpath(output, 'html/head/style[@type="text/css"]').first.content.should include('Boilerplate CSS for Inlining')
+    output.should have_xpath('/html/body/preceding-sibling::head')
   end
 
   it "adds the <style> tag before existing one" do

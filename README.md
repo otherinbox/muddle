@@ -107,60 +107,93 @@ these tags at the end.
 For example, if you have a template the ends up like this:
 
 ```html
-<table>
-  <tbody>
-    <tr>
-      <td><h1>Welcome to our AWESOME NEW WEB SERVICE!</h1></td>
-    </tr>
-    <tr>
-      <td><p>You should come <a href="http://example.com">check us out</a>.</p></td>
-    </tr>
-  </tbody>
-</table>
-```
-
-Muddle will spit out this:
-
-```html
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <style>
-      <!-- ... -->
-    </style>
-  </head>
+<html>
   <body>
-    <table cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
-      <tr>
-        <td>
-          <table cellpadding="0" cellspacing="0" border="0">
-            <tbody>
-              <tr>
-                <td valign="top"><h1>Welcome to our AWESOME NEW WEB SERVICE!</h1></td>
-              </tr>
-              <tr>
-                <td valign="top"><p>You should come <a href="http://example.com">check us out</a>.</p></td>
-              </tr>
-            </tbody>
-          </table>
-        </td>
-      </tr>
+    <table>
+      <tbody>
+        <tr>
+          <td><h1>Welcome to our AWESOME NEW WEB SERVICE!</h1></td>
+        </tr>
+        <tr>
+          <td><p>You should come <a href="http://example.com">check us out</a>.</p></td>
+        </tr>
+      </tbody>
     </table>
   </body>
 </html>
 ```
 
-... Or whatever the output would really be that we'll paste in here when Muddle
-actually produces output.
+Muddle will spit out this:
+```html
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body style="width: 100% !important; margin: 0; padding: 0; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
+    <table cellpadding="0" cellspacing="0" border="0" align="center">
+      <tbody>
+        <tr>
+          <td valign="top"><h1 style="color: black !important;">Welcome to our AWESOME NEW WEB SERVICE!</h1></td>
+        </tr>
+        <tr>
+          <td valign="top"><p style="margin: 1em 0;">You should <a href="http://example.com" style="color: blue;" target="_blank">check us out</a>.</p></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <style type="text/css">
+      /* Boilerplate CSS for HEAD */
+
+      #outlook a {padding:0;}
+      #backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+
+      .ExternalClass {width:100%;}
+      .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;}
+      .image_fix {display:block;}
+
+      h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {color: red !important;}
+      h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {color: purple !important;}
+
+      @media only screen and (max-device-width: 480px) {
+        a[href^="tel"], a[href^="sms"] {
+          text-decoration: none;
+          color: blue;
+          pointer-events: none;
+          cursor: default;
+        }
+        .mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {
+          text-decoration: default;
+          color: orange !important;
+          pointer-events: auto;
+          cursor: default;
+        }
+      }
+      @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+        a[href^="tel"], a[href^="sms"] {
+          text-decoration: none;
+          color: blue;
+          pointer-events: none;
+          cursor: default;
+        }
+        .mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {
+          text-decoration: default;
+          color: orange !important;
+          pointer-events: auto;
+          cursor: default;
+        }
+      }
+      </style><style type="text/css">
+      body { width: 100% !important; -webkit-text-size-adjust: 100% !important; -ms-text-size-adjust: 100% !important; margin: 0 !important; padding: 0 !important; }
+      img { outline: none !important; text-decoration: none !important; -ms-interpolation-mode: bicubic !important; }
+    </style>
+  </body>
+</html>
+```
+
 
 ## To Do
 
-* handle Doctype correctly
-* parser tests using sample emails
 * naughty tag warnings
-* fix rails integration tests
 * build example Rails app, test integration with actual mailers
 * Rails logging integration
 * handle filters returning Nokigiri document? (reduces HTML parsing)

@@ -51,5 +51,28 @@ describe Muddle::Parser do
       @output.should have_xpath('/html/body/table/tr')
       @output.should have_xpath('/html/body/table/tr/td')
     end
+
+    it "uses XHTML strict" do
+      Nokogiri::XML(@output).internal_subset.to_s.should == "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
+    end
+  end
+
+  describe "example (sample email)" do
+    let(:output) { Muddle.parse(example_email_body) }
+
+    it "displays the output" do
+      pending
+      puts '--------'
+      puts output
+      puts '--------'
+    end
+
+    it "inserts the head before the body" do
+      output.should have_xpath('/html/body/preceding-sibling::head')
+    end
+
+    it "inserts the style inside the head" do
+      output.should have_xpath('/html/body/style')
+    end
   end
 end

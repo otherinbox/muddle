@@ -21,7 +21,7 @@ module Muddle
       elsif head_node = doc.xpath('//head').first
         add_style_tag_to(head_node)
       elsif html_node = doc.xpath('html').first
-        head_node = html_node.add_child('<head></head>').first
+        head_node = html_node.first_element_child.add_previous_sibling('<head></head>').first
         add_style_tag_to(head_node) 
       else
         raise "HTML Parsing error - <html> element not found"

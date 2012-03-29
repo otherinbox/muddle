@@ -78,3 +78,7 @@ end
 def minimal_email_body
   File.read(File.join(File.dirname(__FILE__), 'resources', 'minimal_email.html'))
 end
+
+def example_email_body
+  File.read(File.join(File.dirname(__FILE__), 'resources', 'example_email.html'))
+end
