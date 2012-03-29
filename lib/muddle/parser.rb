@@ -4,11 +4,11 @@ class Muddle::Parser
   def initialize
     @filters = []
 
-    @filters << Muddle::BoilerplateCSSFilter if Muddle.config.insert_boilerplate_css
-    @filters << Muddle::PremailerFilter if Muddle.config.parse_with_premailer
-    @filters << Muddle::BoilerplateStyleElementFilter if Muddle.config.insert_boilerplate_styles
-    @filters << Muddle::BoilerplateAttributesFilter if Muddle.config.insert_boilerplate_attributes
-    @filters << Muddle::SchemaValidationFilter if Muddle.config.validate_html
+    @filters << Muddle::Filter::BoilerplateCSSFilter if Muddle.config.insert_boilerplate_css
+    @filters << Muddle::Filter::PremailerFilter if Muddle.config.parse_with_premailer
+    @filters << Muddle::Filter::BoilerplateStyleElementFilter if Muddle.config.insert_boilerplate_styles
+    @filters << Muddle::Filter::BoilerplateAttributesFilter if Muddle.config.insert_boilerplate_attributes
+    @filters << Muddle::Filter::SchemaValidationFilter if Muddle.config.validate_html
   end
 
   # Parse an email body

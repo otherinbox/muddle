@@ -31,12 +31,14 @@ end
 
 RSpec::Matchers.define :have_xpath do |attribute|
   match do |model|
-    !Nokogiri::HTML(model).xpath(attribute).empty?
+    doc = model.kind_of?(Nokogiri::XML::Node) ? model : Nokogiri::HTML(model)
+    !doc.xpath(attribute).empty?
   end
 end
 
-def xpath(string, selector)
-  Nokogiri::HTML(string).xpath(selector)
+def xpath(source, selector)
+  doc = source.kind_of?(Nokogiri::XML::Node) ? source : Nokogiri::HTML(source)
+  doc.xpath(selector)
 end
 
 def multi_part_email
