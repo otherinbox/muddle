@@ -201,6 +201,9 @@ Muddle will spit out this:
 * handle filters returning Nokigiri document? (reduces HTML parsing)
 * performance tests
 * improve README
+* test external CSS resource handling
+* test if premailer is making image URI's absolute where possible
+
 
 
 ## Contributing
