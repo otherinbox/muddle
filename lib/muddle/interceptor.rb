@@ -10,7 +10,7 @@ class Muddle::Interceptor
   def muddle_message
     return @message unless html_found?
 
-    new_message_body = Muddle::Parser.parse(message_body)
+    new_message_body = Muddle.parse(message_body)
     replace_message_body(new_message_body)
     @message
   end
@@ -24,7 +24,7 @@ class Muddle::Interceptor
   end
 
   def find_message_body
-    body_location.body
+    body_location.body.to_s
   end
 
   def body_location

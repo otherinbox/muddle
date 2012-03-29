@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Muddle::Interceptor do
   before(:each) do
-    Muddle::Parser.stub!(:parse) { 'muddled email body' }
+    Muddle.parser.stub!(:parse) { 'muddled email body' }
   end
 
   subject { Muddle::Interceptor }

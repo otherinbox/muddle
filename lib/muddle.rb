@@ -2,10 +2,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), 'lib'))
 
 require "muddle/version"
-
-require "muddle/premailer_filter"
-require "muddle/email_boilerplate_filter"
-require "muddle/schema_validation_filter"
+require "muddle/filter"
 require "muddle/parser"
 require "muddle/configuration"
 
@@ -14,11 +11,11 @@ module Muddle
   #
   # Pass it a block and the configuration object will yield 'self'
   #
-  def configure(&block)
+  def self.configure(&block)
     yield config
   end
 
-  def config
+  def self.config
     @config ||= Muddle::Configuration.new
   end
 
@@ -28,16 +25,11 @@ module Muddle
   #
   # returns body_string after passing it through the filters defined in Parser.filters
   #
-  def parse(body_string)
+  def self.parse(body_string)
     parser.parse body_string
   end
 
-  def parser
+  def self.parser
     @parser ||= Muddle::Parser.new
-  end
-
-  # Wrapper for premailer's plaintext extraction
-  #
-  def plain_text_from(body_string)
   end
 end
