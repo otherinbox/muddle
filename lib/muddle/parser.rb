@@ -5,7 +5,7 @@ class Muddle::Parser
   #
   # The default filters do the following:
   #
-  # CSS Filter adds a style block containing boilerplate CSS attributes to be
+  # CSS  adds a style block containing boilerplate CSS attributes to be
   #   inlined.  This is based on Email Boilerplate's 'Inline: YES' portions
   #
   # Premailer passes the email through the Premailer gem, which inlines the CSS
@@ -26,11 +26,11 @@ class Muddle::Parser
   def initialize
     @filters = []
 
-    @filters << Muddle::BoilerplateCSSFilter if Muddle.config.insert_boilerplate_css
-    @filters << Muddle::PremailerFilter if Muddle.config.parse_with_premailer
-    @filters << Muddle::BoilerplateStyleElementFilter if Muddle.config.insert_boilerplate_styles
-    @filters << Muddle::BoilerplateAttributesFilter if Muddle.config.insert_boilerplate_attributes
-    @filters << Muddle::SchemaValidationFilter if Muddle.config.validate_html
+    @filters << Muddle::Filter::BoilerplateCSS          if Muddle.config.insert_boilerplate_css
+    @filters << Muddle::Filter::Premailer               if Muddle.config.parse_with_premailer
+    @filters << Muddle::Filter::BoilerplateStyleElement if Muddle.config.insert_boilerplate_styles
+    @filters << Muddle::Filter::BoilerplateAttributes   if Muddle.config.insert_boilerplate_attributes
+    @filters << Muddle::Filter::SchemaValidation        if Muddle.config.validate_html
   end
 
   # Parse an email body
