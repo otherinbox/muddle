@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Muddle::BoilerplateAttributesFilter do
-  let(:f) { Muddle::BoilerplateAttributesFilter }
+describe Muddle::Filter::BoilerplateAttributes do
+  let(:f) { Muddle::Filter::BoilerplateAttributes }
 
   it "can parse full documents" do
     output = f.filter(minimal_email_body)
