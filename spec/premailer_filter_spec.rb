@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Muddle::Filter::PremailerFilter do
-  let(:f) { Muddle::Filter::PremailerFilter }
+describe Muddle::PremailerFilter do
+  let(:f) { Muddle::PremailerFilter }
 
   it "can parse full documents" do
     output = f.filter(minimal_email_body)

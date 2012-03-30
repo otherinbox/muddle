@@ -2,7 +2,12 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), 'lib'))
 
 require "muddle/version"
-require "muddle/filter"
+
+require "muddle/filters/premailer"
+require "muddle/filters/boilerplate_style_element"
+require "muddle/filters/boilerplate_css"
+require "muddle/filters/boilerplate_attributes"
+require "muddle/filters/schema_validation"
 require "muddle/parser"
 require "muddle/configuration"
 
