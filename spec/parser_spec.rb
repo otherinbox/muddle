@@ -5,28 +5,28 @@ describe Muddle::Parser do
     pr = Muddle::Parser.new
 
     pr.filters.size.should eql(5)
-    pr.filters[0].should eql(Muddle::BoilerplateCSSFilter)
-    pr.filters[1].should eql(Muddle::PremailerFilter)
-    pr.filters[2].should eql(Muddle::BoilerplateStyleElementFilter)
-    pr.filters[3].should eql(Muddle::BoilerplateAttributesFilter)
-    pr.filters[4].should eql(Muddle::SchemaValidationFilter)
+    pr.filters[0].should eql(Muddle::Filter::BoilerplateCSS)
+    pr.filters[1].should eql(Muddle::Filter::Premailer)
+    pr.filters[2].should eql(Muddle::Filter::BoilerplateStyleElement)
+    pr.filters[3].should eql(Muddle::Filter::BoilerplateAttributes)
+    pr.filters[4].should eql(Muddle::Filter::SchemaValidation)
   end
 
   it "only adds filters if config says" do
     Muddle.config.parse_with_premailer = false
-    Muddle::Parser.new.filters.should_not include(Muddle::PremailerFilter)
+    Muddle::Parser.new.filters.should_not include(Muddle::Filter::Premailer)
 
     Muddle.config.insert_boilerplate_styles = false
-    Muddle::Parser.new.filters.should_not include(Muddle::BoilerplateStyleElementFilter)
+    Muddle::Parser.new.filters.should_not include(Muddle::Filter::BoilerplateStyleElement)
 
     Muddle.config.insert_boilerplate_css = false
-    Muddle::Parser.new.filters.should_not include(Muddle::BoilerplateCSSFilter)
+    Muddle::Parser.new.filters.should_not include(Muddle::Filter::BoilerplateCSS)
 
     Muddle.config.insert_boilerplate_attributes = false
-    Muddle::Parser.new.filters.should_not include(Muddle::BoilerplateAttributesFilter)
+    Muddle::Parser.new.filters.should_not include(Muddle::Filter::BoilerplateAttributes)
 
     Muddle.config.validate_html = false
-    Muddle::Parser.new.filters.should_not include(Muddle::SchemaValidationFilter)
+    Muddle::Parser.new.filters.should_not include(Muddle::Filter::SchemaValidation)
   end
 
   describe "with default options" do
