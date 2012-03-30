@@ -6,7 +6,7 @@ describe Muddle::Filter::BoilerplateStyleElement do
   it "can parse full documents" do
     output = f.filter(minimal_email_body)
 
-    xpath(output, 'html/body/style').count.should eql(2)
+    xpath(output, 'html/body/style').count.should eql(1)
   end
 
   it "inserts a <body> element if missing" do
