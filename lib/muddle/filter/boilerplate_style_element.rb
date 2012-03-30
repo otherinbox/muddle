@@ -10,9 +10,9 @@ module Muddle::Filter::BoilerplateStyleElement
   end
 
   def self.insert_style_block(doc)
-    if style_node = doc.css("body style").first
+    if (style_node = doc.css("body style").first)
       style_node.add_previous_sibling('<style type="text/css"></style>').first.content = boilerplate_css
-    elsif body_node = doc.css("body").first
+    elsif (body_node = doc.css("body").first)
       body_node.add_child('<style type="text/css"></style>').first.content = boilerplate_css
     end
   end
