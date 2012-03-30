@@ -40,6 +40,8 @@ class Muddle::Parser
   # Returns the parsed body string
   #
   def parse(body_string)
-    filters.inject(body_string) {|filtered_string, filter| filter.filter(filtered_string)}
+    filters.inject(body_string) do |filtered_string, filter|
+      s = filter.filter(filtered_string)
+    end
   end
 end
