@@ -9,13 +9,30 @@ describe Muddle::Filter::Premailer do
     output.should have_xpath('//a[@class="inlineme"]')
   end
 
+  it "doesn't add a DTD" do
+    output = f.filter(minimal_email_body)
+
+    Nokogiri::XML(output).internal_subset.should be_false
+  end
+
+  it "preserves custom DTD's" do
+    output = f.filter(email_body_with_custom_dtd)
+    puts output
+
+    Nokogiri::XML(output).internal_subset.to_s.should == "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\">"
+  end
 
   it "uses config" do
     Muddle.configure do |config|
       config.premailer[:line_length] = 50
     end
 
-    premailer = Premailer.new("A string", :with_html_string => true)
+    premailer = Premailer.new("A string", 
+                              :remove_comments => true,
+                              :with_html_string => true,
+                              :adapter => :hpricot,
+                              :line_length => 50
+                             )
 
     Premailer.should_receive(:new).with("A string", {
       :remove_comments => true,
