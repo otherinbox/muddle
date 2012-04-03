@@ -1,6 +1,4 @@
 class Muddle::Parser
-  attr_accessor :filters
-
   # Set up the parser
   #
   # The default filters do the following:
@@ -40,7 +38,7 @@ class Muddle::Parser
   # Returns the parsed body string
   #
   def parse(body_string)
-    filters.inject(body_string) do |filtered_string, filter|
+    @filters.inject(body_string) do |filtered_string, filter|
       s = filter.filter(filtered_string)
     end
   end

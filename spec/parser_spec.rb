@@ -1,78 +1,123 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Muddle::Parser do
-  it "has a default set of filters" do
-    pr = Muddle::Parser.new
+  let(:config) { double(Muddle::Configuration).as_null_object }
 
-    pr.filters.size.should eql(5)
-    pr.filters[0].should eql(Muddle::Filter::BoilerplateCSS)
-    pr.filters[1].should eql(Muddle::Filter::Premailer)
-    pr.filters[2].should eql(Muddle::Filter::BoilerplateStyleElement)
-    pr.filters[3].should eql(Muddle::Filter::BoilerplateAttributes)
-    pr.filters[4].should eql(Muddle::Filter::SchemaValidation)
+  before(:each) do
+    filters = [
+      Muddle::Filter::BoilerplateCSS,
+      Muddle::Filter::Premailer,
+      Muddle::Filter::BoilerplateStyleElement,
+      Muddle::Filter::BoilerplateAttributes,
+      Muddle::Filter::SchemaValidation,
+    ]
+
+    filters.each do |filter|
+      filter.stub!(:filter) { |arg| arg }
+    end
+
+    Muddle.stub!(:config) { config }
   end
 
-  it "only adds filters if config says" do
-    Muddle.config.parse_with_premailer = false
-    Muddle::Parser.new.filters.should_not include(Muddle::Filter::Premailer)
+  after(:each) { subject.parse('email') }
 
-    Muddle.config.insert_boilerplate_styles = false
-    Muddle::Parser.new.filters.should_not include(Muddle::Filter::BoilerplateStyleElement)
-
-    Muddle.config.insert_boilerplate_css = false
-    Muddle::Parser.new.filters.should_not include(Muddle::Filter::BoilerplateCSS)
-
-    Muddle.config.insert_boilerplate_attributes = false
-    Muddle::Parser.new.filters.should_not include(Muddle::Filter::BoilerplateAttributes)
-
-    Muddle.config.validate_html = false
-    Muddle::Parser.new.filters.should_not include(Muddle::Filter::SchemaValidation)
-  end
-
-  describe "with default options" do
+  context "with BoilerplateCSS on" do
     before(:each) do
-      @output = Muddle.parse(minimal_email_body)
+      config.stub!(:insert_boilerplate_css) { true }
     end
 
-    it "displays the output" do
-      pending
-      puts '--------'
-      puts @output
-      puts '--------'
-    end
-
-    it "retains the document structure" do
-      @output.should have_xpath('/html')
-      @output.should have_xpath('/html/head')
-      @output.should have_xpath('/html/head/title')
-      #@output.should have_xpath('/html/head/style') # premailer removes the style tag when using hpricot...
-      @output.should have_xpath('/html/body')
-      @output.should have_xpath('/html/body/table')
-      @output.should have_xpath('/html/body/table/tr')
-      @output.should have_xpath('/html/body/table/tr/td')
-    end
-
-    it "uses XHTML strict" do
-      Nokogiri::XML(@output).internal_subset.to_s.should == "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
+    it "calls the css filter" do
+      Muddle::Filter::BoilerplateCSS.should_receive(:filter).with('email')
     end
   end
 
-  describe "example (sample email)" do
-    let(:output) { Muddle.parse(example_email_body) }
-
-    it "displays the output" do
-      pending
-      puts '--------'
-      puts output
-      puts '--------'
+  context "with BoilerplateCSS off" do
+    before(:each) do
+      config.stub!(:insert_boilerplate_css) { false }
     end
 
-    it "inserts the head before the body" do
-      output.should have_xpath('/html/body/preceding-sibling::head')
+    it "doesn't call the css filter" do
+      Muddle::Filter::BoilerplateCSS.should_not_receive(:filter).with('email')
+    end
+  end
+
+  context "with Premailer on" do
+    before(:each) do
+      config.stub!(:parse_with_premailer) { true }
     end
 
-    it "inserts the style inside the head" do
-      output.should have_xpath('/html/body/style')
+    it "calls the premailer filter" do
+      Muddle::Filter::Premailer.should_receive(:filter).with('email')
+    end
+  end
+
+  context "with Premailer off" do
+    before(:each) do
+      config.stub!(:parse_with_premailer) { false }
+    end
+
+    it "doesn't call the premailer filter" do
+      Muddle::Filter::Premailer.should_not_receive(:filter).with('email')
+    end
+  end
+
+  context "with BoilerplateStyleElement on" do
+    before(:each) do
+      config.stub!(:insert_boilerplate_styles) { true }
+    end
+
+    it "calls the style filter" do
+      Muddle::Filter::BoilerplateStyleElement.should_receive(:filter).with('email')
+    end
+  end
+
+  context "with BoilerplateStyleElement off" do
+    before(:each) do
+      config.stub!(:insert_boilerplate_styles) { false }
+    end
+
+    it "doesn't call the style filter" do
+      Muddle::Filter::BoilerplateStyleElement.should_not_receive(:filter).with('email')
+    end
+  end
+
+  context "with BoilerplateAttributes on" do
+    before(:each) do
+      config.stub!(:insert_boilerplate_attributes) { true }
+    end
+
+    it "calls the attribute filter" do
+      Muddle::Filter::BoilerplateAttributes.should_receive(:filter).with('email')
+    end
+  end
+
+  context "with BoilerplateAttributes off" do
+    before(:each) do
+      config.stub!(:insert_boilerplate_attributes) { false }
+    end
+
+    it "doesn't call the attribute filter" do
+      Muddle::Filter::BoilerplateAttributes.should_not_receive(:filter).with('email')
+    end
+  end
+
+  context "with SchemaValidation on" do
+    before(:each) do
+      config.stub!(:validate_html) { true }
+    end
+
+    it "calls the validation filter" do
+      Muddle::Filter::SchemaValidation.should_receive(:filter).with('email')
+    end
+  end
+
+  context "with SchemaValidation off" do
+    before(:each) do
+      config.stub!(:validate_html) { false }
+    end
+
+    it "doesn't call the validation filter" do
+      Muddle::Filter::SchemaValidation.should_not_receive(:filter).with('email')
     end
   end
 end
