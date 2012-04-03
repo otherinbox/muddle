@@ -37,5 +37,6 @@ class Muddle::Configuration
   #
   def configure
     yield self
+    self
   end
 end

@@ -18,29 +18,36 @@ describe Muddle::Configuration do
     end
   end
 
-  it "accepts a block to configure and sets options" do
-    config = Muddle::Configuration.new
-    config.configure do |config|
-      config.parse_with_premailer = false
-      config.insert_boilerplate_styles = false
-      config.insert_boilerplate_css = false
-      config.insert_boilerplate_attributes = false
-      config.validate_html = false
-      config.generate_plain_text = true
-      config.premailer_options[:line_length] = 50
+  context "with some custom options" do
+    subject do
+      Muddle::Configuration.new.configure do |config|
+        config.parse_with_premailer = false
+        config.insert_boilerplate_styles = false
+        config.insert_boilerplate_css = false
+        config.insert_boilerplate_attributes = false
+        config.validate_html = false
+        config.generate_plain_text = true
+      end
     end
 
-    config.parse_with_premailer.should be_false
-    config.insert_boilerplate_styles.should be_false
-    config.insert_boilerplate_css.should be_false
-    config.insert_boilerplate_attributes.should be_false
-    config.validate_html.should be_false
-    config.generate_plain_text.should be_true
-    config.premailer_options.should eql({
-      :remove_comments => true,
-      :with_html_string => true,
-      :adapter => :hpricot,
-      :line_length => 50
-    })
+    its(:parse_with_premailer) { should be_false }
+    its(:insert_boilerplate_styles) { should be_false }
+    its(:insert_boilerplate_css) { should be_false }
+    its(:insert_boilerplate_attributes) { should be_false }
+    its(:validate_html) { should be_false }
+    its(:generate_plain_text) { should be_true }
+
+    describe "premailer_options" do
+      subject do
+        Muddle::Configuration.new.configure { |config|
+          config.premailer_options[:line_length] = 50
+        }.premailer_options
+      end
+
+      its([:remove_comments]) { should be_true }
+      its([:with_html_string]) { should be_true }
+      its([:adapter]) { should == :hpricot }
+      its([:line_length]) { should == 50 }
+    end
   end
 end
