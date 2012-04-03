@@ -24,10 +24,10 @@ describe Muddle::Filter::Premailer do
 
   it "uses config" do
     Muddle.configure do |config|
-      config.premailer[:line_length] = 50
+      config.premailer_options[:line_length] = 50
     end
 
-    premailer = Premailer.new("A string", 
+    premailer = Premailer.new("A string",
                               :remove_comments => true,
                               :with_html_string => true,
                               :adapter => :hpricot,

@@ -6,7 +6,7 @@ class Muddle::Configuration
   attr_accessor :validate_html
   attr_accessor :generate_plain_text
 
-  attr_accessor :premailer
+  attr_accessor :premailer_options
 
   # Initialize the configuration object with default values
   #
@@ -23,7 +23,7 @@ class Muddle::Configuration
     # NOTE: when this tries to inline CSS, all it sees is a stylesheet URL
     # This may require that we download css from the interwebs @ each render
     # pass of a mailer ?!?!?
-    @premailer = {
+    @premailer_options = {
       #:base_url => root_url, # Put in rails stuff...
       :remove_comments => true, # Env-dependent?
       :with_html_string => true,

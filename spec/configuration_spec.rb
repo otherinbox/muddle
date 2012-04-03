@@ -1,21 +1,21 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Muddle::Configuration do
-  it "has default options" do
-    config = Muddle::Configuration.new
+  context "with default options" do
+    its(:parse_with_premailer) { should be_true }
+    its(:insert_boilerplate_styles) { should be_true }
+    its(:insert_boilerplate_css) { should be_true }
+    its(:insert_boilerplate_attributes) { should be_true }
+    its(:validate_html) { should be_true }
+    its(:generate_plain_text) { should be_false }
 
-    config.parse_with_premailer.should be_true
-    config.insert_boilerplate_styles.should be_true
-    config.insert_boilerplate_css.should be_true
-    config.insert_boilerplate_attributes.should be_true
-    config.validate_html.should be_true
-    config.generate_plain_text.should be_false
+    describe "premailer_options" do
+      subject { Muddle::Configuration.new.premailer_options }
 
-    config.premailer.should eql({
-      :remove_comments => true,
-      :with_html_string => true,
-      :adapter => :hpricot
-    })
+      its([:remove_comments]) { should be_true }
+      its([:with_html_string]) { should be_true }
+      its([:adapter]) { should == :hpricot }
+    end
   end
 
   it "accepts parameters at instantiation and sets options" do
@@ -27,7 +27,7 @@ describe Muddle::Configuration do
       :insert_boilerplate_attributes => false,
       :validate_html => false,
       :generate_plain_text => true,
-      :premailer => {:line_length => 50}
+      :premailer_options => {:line_length => 50}
     )
 
     config.parse_with_premailer.should be_false
@@ -36,7 +36,7 @@ describe Muddle::Configuration do
     config.insert_boilerplate_attributes.should be_false
     config.validate_html.should be_false
     config.generate_plain_text.should be_true
-    config.premailer.should eql({
+    config.premailer_options.should eql({
       :remove_comments => true,
       :with_html_string => true,
       :adapter => :hpricot,
@@ -53,7 +53,7 @@ describe Muddle::Configuration do
       config.insert_boilerplate_attributes = false
       config.validate_html = false
       config.generate_plain_text = true
-      config.premailer[:line_length] = 50
+      config.premailer_options[:line_length] = 50
     end
 
     config.parse_with_premailer.should be_false
@@ -62,7 +62,7 @@ describe Muddle::Configuration do
     config.insert_boilerplate_attributes.should be_false
     config.validate_html.should be_false
     config.generate_plain_text.should be_true
-    config.premailer.should eql({
+    config.premailer_options.should eql({
       :remove_comments => true,
       :with_html_string => true,
       :adapter => :hpricot,
@@ -79,7 +79,7 @@ describe Muddle::Configuration do
       config.insert_boilerplate_attributes = false
       config.validate_html = false
       config.generate_plain_text = true
-      config.premailer[:line_length] = 50
+      config.premailer_options[:line_length] = 50
     end
 
     config.parse_with_premailer.should be_false
@@ -88,7 +88,7 @@ describe Muddle::Configuration do
     config.insert_boilerplate_attributes.should be_false
     config.validate_html.should be_false
     config.generate_plain_text.should be_true
-    config.premailer.should eql({
+    config.premailer_options.should eql({
       :remove_comments => true,
       :with_html_string => true,
       :adapter => :hpricot,
