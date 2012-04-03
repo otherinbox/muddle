@@ -5,10 +5,6 @@ describe Muddle do
     Muddle.parser.should be_a(Muddle::Parser)
   end
 
-  it "parses" do
-    Muddle.parse("<html><body>A string</body></html>").should be_true
-  end
-
   it "has a config with default options" do
     Muddle.config.parse_with_premailer.should be_true
     Muddle.config.insert_boilerplate_css.should be_true
