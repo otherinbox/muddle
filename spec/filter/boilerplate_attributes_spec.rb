@@ -12,13 +12,13 @@ describe Muddle::Filter::BoilerplateAttributes do
     output.should have_xpath('//table[@align="center"]')
 
     output.should have_xpath('//td[@valign="top"]')
-    
+
     output.should have_xpath('//a[@target="_blank"]')
   end
 
   describe "table attributes" do
     # NOTE: Should these be CSS-aware?
-    
+
     it "sets the attributes if missing" do
       output = f.filter("<table></table>")
       output.should have_xpath('//table[@cellpadding="0"]')
