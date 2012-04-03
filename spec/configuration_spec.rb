@@ -18,58 +18,6 @@ describe Muddle::Configuration do
     end
   end
 
-  it "accepts parameters at instantiation and sets options" do
-    pending
-    config = Muddle::Configuration.new(
-      :parse_with_premailer => false,
-      :insert_boilerplate_styles => false,
-      :insert_boilerplate_css => false,
-      :insert_boilerplate_attributes => false,
-      :validate_html => false,
-      :generate_plain_text => true,
-      :premailer_options => {:line_length => 50}
-    )
-
-    config.parse_with_premailer.should be_false
-    config.insert_boilerplate_styles.should be_false
-    config.insert_boilerplate_css.should be_false
-    config.insert_boilerplate_attributes.should be_false
-    config.validate_html.should be_false
-    config.generate_plain_text.should be_true
-    config.premailer_options.should eql({
-      :remove_comments => true,
-      :with_html_string => true,
-      :adapter => :hpricot,
-      :line_length => 50
-    })
-  end
-
-
-  it "accepts a block at instantiation and sets options" do
-    config = Muddle::Configuration.new do |config|
-      config.parse_with_premailer = false
-      config.insert_boilerplate_styles = false
-      config.insert_boilerplate_css = false
-      config.insert_boilerplate_attributes = false
-      config.validate_html = false
-      config.generate_plain_text = true
-      config.premailer_options[:line_length] = 50
-    end
-
-    config.parse_with_premailer.should be_false
-    config.insert_boilerplate_styles.should be_false
-    config.insert_boilerplate_css.should be_false
-    config.insert_boilerplate_attributes.should be_false
-    config.validate_html.should be_false
-    config.generate_plain_text.should be_true
-    config.premailer_options.should eql({
-      :remove_comments => true,
-      :with_html_string => true,
-      :adapter => :hpricot,
-      :line_length => 50
-    })
-  end
-
   it "accepts a block to configure and sets options" do
     config = Muddle::Configuration.new
     config.configure do |config|

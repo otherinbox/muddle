@@ -29,10 +29,6 @@ class Muddle::Configuration
       :with_html_string => true,
       :adapter => :hpricot
     }
-
-    if block_given?
-      configure &block
-    end
   end
 
   # Set config vars
