@@ -5,13 +5,13 @@ class Muddle::Configuration
   attr_accessor :insert_boilerplate_attributes
   attr_accessor :validate_html
   attr_accessor :generate_plain_text
-  
+
   attr_accessor :premailer
 
   # Initialize the configuration object with default values
   #
   # if a block is passed, we'll yield 'this' to it so you can set config values
-  #     
+  #
   def initialize(options = {}, &block)
     @parse_with_premailer = options[:parse_with_premailer] || true
     @insert_boilerplate_styles = options[:insert_boilerplate_styles] || true
@@ -21,7 +21,7 @@ class Muddle::Configuration
     @generate_plain_text = options[:generate_plain_text] || false
 
     # NOTE: when this tries to inline CSS, all it sees is a stylesheet URL
-    # This may require that we download css from the interwebs @ each render 
+    # This may require that we download css from the interwebs @ each render
     # pass of a mailer ?!?!?
     @premailer = {
       #:base_url => root_url, # Put in rails stuff...

@@ -101,5 +101,4 @@ describe Muddle::Configuration do
     config.parse_with_premailer = false
     config.parse_with_premailer.should be_false
   end
-
 end
