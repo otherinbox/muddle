@@ -43,10 +43,4 @@ describe Muddle::Configuration do
       :line_length => 50
     })
   end
-
-  it "allows direct assignment" do
-    config = Muddle::Configuration.new
-    config.parse_with_premailer = false
-    config.parse_with_premailer.should be_false
-  end
 end
