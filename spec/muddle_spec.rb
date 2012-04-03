@@ -1,58 +1,41 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Muddle do
-  it "has a parser object" do
-    Muddle.parser.should be_a(Muddle::Parser)
-  end
-
-  context "with default options" do
-    it "uses premailer" do
-      Muddle.config.parse_with_premailer.should be_true
-    end
-
-    it "inserts boiletplate css" do
-      Muddle.config.insert_boilerplate_css.should be_true
-    end
-
-    it "validates the html" do
-      Muddle.config.validate_html.should be_true
-    end
-
-    it "doesn't generate plaintext" do
-      Muddle.config.generate_plain_text.should be_false
-    end
-
-    it "configures premailer to remove comments" do
-      Muddle.config.premailer[:remove_comments].should be_true
-    end
-
-    it "configures premailer to expect input as a string" do
-      Muddle.config.premailer[:with_html_string].should be_true
-    end
-
-    it "configures premailer to use hpricot" do
-      Muddle.config.premailer[:adapter].should == :hpricot
+  before(:each) do
+    %W(@config @parser).each do |var|
+      Muddle.instance_variable_set(var, nil)
     end
   end
 
-  it "constructs the root module with a configure method" do
-    Muddle.configure do |config|
-      config.parse_with_premailer = false
-      config.insert_boilerplate_css = false
-      config.validate_html = false
-      config.generate_plain_text = true
-      config.premailer[:line_length] = 50
+  describe ".parser" do
+    it "returns a Muddle::Parser object" do
+      Muddle.parser.should be_a(Muddle::Parser)
     end
+  end
 
-    Muddle.config.parse_with_premailer.should be_false
-    Muddle.config.insert_boilerplate_css.should be_false
-    Muddle.config.validate_html.should be_false
-    Muddle.config.generate_plain_text.should be_true
-    Muddle.config.premailer.should eql({
-      :remove_comments => true,
-      :with_html_string => true,
-      :adapter => :hpricot,
-      :line_length => 50
-    })
+  describe ".parse" do
+    let(:parser) { double(Muddle::Parser) }
+
+    before(:each) { Muddle::Parser.stub!(:new) { parser } }
+
+    it "passes stuff to the parser" do
+      parser.should_receive(:parse).with('email')
+
+      Muddle.parse('email')
+    end
+  end
+
+  describe ".config" do
+    it "returns a Muddle::Configuration object" do
+      Muddle.config.should be_a(Muddle::Configuration)
+    end
+  end
+
+  describe ".configure" do
+    it "yields a Muddle::Configureation object" do
+      Muddle.configure do |config|
+        config.should be_a(Muddle::Configuration)
+      end
+    end
   end
 end
