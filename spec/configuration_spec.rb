@@ -10,7 +10,7 @@ describe Muddle::Configuration do
     config.insert_boilerplate_attributes.should be_true
     config.validate_html.should be_true
     config.generate_plain_text.should be_false
-    
+
     config.premailer.should eql({
       :remove_comments => true,
       :with_html_string => true,
