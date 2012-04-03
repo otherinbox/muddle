@@ -12,7 +12,7 @@ class Muddle::Configuration
   #
   # if a block is passed, we'll yield 'this' to it so you can set config values
   #
-  def initialize(options = {}, &block)
+  def initialize(options = {})
     @parse_with_premailer = options[:parse_with_premailer] || true
     @insert_boilerplate_styles = options[:insert_boilerplate_styles] || true
     @insert_boilerplate_css = options[:insert_boilerplate_css] || true
