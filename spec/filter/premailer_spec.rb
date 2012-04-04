@@ -1,55 +1,64 @@
 require 'spec_helper'
 
 describe Muddle::Filter::Premailer do
-  let(:f) { Muddle::Filter::Premailer }
+  context "with a minimal email" do
+    subject { Muddle::Filter::Premailer.filter(minimal_email_body) }
 
-  it "can parse full documents" do
-    output = f.filter(minimal_email_body)
-
-    output.should have_xpath('//a[@class="inlineme"]')
-  end
-
-  it "doesn't add a DTD" do
-    output = f.filter(minimal_email_body)
-
-    Nokogiri::XML(output).internal_subset.should be_false
-  end
-
-  it "preserves custom DTD's" do
-    output = f.filter(email_body_with_custom_dtd)
-    puts output
-
-    Nokogiri::XML(output).internal_subset.to_s.should == "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\">"
-  end
-
-  it "uses config" do
-    Muddle.configure do |config|
-      config.premailer_options[:line_length] = 50
+    it "can parse full documents" do
+      subject.should have_xpath('//a[@class="inlineme"]')
     end
 
-    premailer = Premailer.new("A string",
-                              :remove_comments => true,
-                              :with_html_string => true,
-                              :adapter => :hpricot,
-                              :line_length => 50
-                             )
-
-    Premailer.should_receive(:new).with("A string", {
-      :remove_comments => true,
-      :with_html_string => true,
-      :adapter => :hpricot,
-      :line_length => 50
-    }).and_return premailer
-
-    f.filter("A string")
+    it "doesn't add a DTD" do
+      Nokogiri::XML(subject).internal_subset.should be_false
+    end
   end
 
-  it "filters a string" do
-    f.filter("A string").should be_true
-    f.filter("A string").should be_a(String)
+  context "with a custom DTD" do
+    subject { Muddle::Filter::Premailer.filter(email_body_with_custom_dtd) }
+
+    it "preserves custom DTD's" do
+      Nokogiri::XML(subject).internal_subset.to_s.should == "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\">"
+    end
   end
 
-  it "removes comments"
-  it "inlines CSS"
-  it "converts CSS to attributes"
+  context "with configured options" do
+    let(:premailer_options) do
+      {
+        :remove_comments  => true,
+        :with_html_string => true,
+        :adapter          => :hpricot,
+        :line_length      => 50
+      }
+    end
+
+    let!(:new_premailer) { Premailer.new('A string', premailer_options) }
+
+    before(:each) do
+      Muddle.configure do |config|
+        config.premailer_options[:line_length] = 50
+      end
+    end
+
+    after(:each) do
+      Muddle::Filter::Premailer.filter('A string')
+    end
+
+    it "uses the options" do
+      Premailer.should_receive(:new).with("A string", premailer_options).and_return(new_premailer)
+    end
+  end
+
+  context "with comments" do
+    it "removes comments"
+  end
+
+  context "with styles in the HTML" do
+    it "inlines CSS"
+    it "converts CSS to attributes"
+  end
+
+  context "with an external style sheet" do
+    it "inlines CSS"
+    it "converts CSS to attributes"
+  end
 end
