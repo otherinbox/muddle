@@ -14,7 +14,7 @@ describe Muddle::Filter::BoilerplateCSS do
 
   it "adds <head> and a <style> tag if needed" do
     email = "<html><body><h1>foo</h1><body></html>"
- 
+
     output = f.filter(email)
 
     output.should have_xpath('html')
