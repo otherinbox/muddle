@@ -2,9 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Muddle do
   before(:each) do
-    %W(@config @parser).each do |var|
-      Muddle.instance_variable_set(var, nil)
-    end
+    reset_muddle_module
   end
 
   describe ".parser" do

@@ -90,3 +90,9 @@ end
 def email_body_with_custom_dtd
   File.read(File.join(File.dirname(__FILE__), 'resources', 'custom_dtd_email.html'))
 end
+
+def reset_muddle_module
+  %W(@config @parser).each do |var|
+    Muddle.instance_variable_set(var, nil)
+  end
+end
