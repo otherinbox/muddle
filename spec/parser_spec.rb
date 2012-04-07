@@ -75,12 +75,4 @@ describe Muddle::Parser do
       output.should have_xpath('/html/body/style')
     end
   end
-
-  describe "another" do
-    let(:output) {Muddle.parse(another_email_body)}
-
-    it "works" do
-      output.should be_true
-    end
-  end
 end
