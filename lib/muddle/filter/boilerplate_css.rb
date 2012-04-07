@@ -21,11 +21,11 @@ module Muddle::Filter::BoilerplateCSS
   end
 
   def self.insert_styles_to_inline(doc)
-    if style_node = doc.xpath('html/head/style').first
+    if style_node = doc.css('html head style').first
       add_style_tag_before(style_node)
-    elsif head_node = doc.xpath('html/head').first
+    elsif head_node = doc.css('html head').first
       add_style_tag_to(head_node)
-    elsif html_node = doc.xpath('html').first
+    elsif html_node = doc.css('html').first
       head_node = html_node.first_element_child.add_previous_sibling('<head></head>').first
       add_style_tag_to(head_node)
     else
