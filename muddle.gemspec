@@ -17,7 +17,8 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'premailer', '~>1.7.3'
   gem.add_dependency 'nokogiri', '~>1.5.0'
-  gem.add_dependency 'hpricot', '~>0.8.6'
+  gem.add_dependency 'hpricot', '>=0.6'
+  # gem.add_dependency 'hpricot', '~>0.8.6'
   gem.add_dependency 'css_parser', '~>1.2.6'
 
   gem.add_development_dependency 'rspec'
