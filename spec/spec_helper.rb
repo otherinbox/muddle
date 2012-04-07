@@ -90,7 +90,3 @@ end
 def email_body_with_custom_dtd
   File.read(File.join(File.dirname(__FILE__), 'resources', 'custom_dtd_email.html'))
 end
-
-def another_email_body
-  File.read(File.join(File.dirname(__FILE__), 'resources', 'another.html'))
-end
