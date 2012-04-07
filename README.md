@@ -198,11 +198,14 @@ Muddle will spit out this:
 * naughty tag warnings
 * build example Rails app, test integration with actual mailers
 * Rails logging integration
-* handle filters returning Nokigiri document? (reduces HTML parsing)
 * performance tests
 * improve README
 * test external CSS resource handling
 * test if premailer is making image URI's absolute where possible
+* complain about images with relative urls
+* complain about image not having alt, height, width
+* create background attribute from css where relevant
+* check for lines starting with a period
 
 
 

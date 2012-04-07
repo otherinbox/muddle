@@ -23,6 +23,8 @@ end
 
 gem 'jquery-rails'
 
+gem 'muddle', :require => 'muddle/rails', :path => '../../'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
