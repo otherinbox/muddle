@@ -13,7 +13,7 @@ module Muddle
   # Pass it a block and the configuration object will yield 'self'
   #
   def self.configure(&block)
-    yield config
+    config.configure(&block)
   end
 
   def self.config

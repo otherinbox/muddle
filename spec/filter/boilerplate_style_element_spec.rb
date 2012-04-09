@@ -1,20 +1,43 @@
 require 'spec_helper'
 
 describe Muddle::Filter::BoilerplateStyleElement do
-  let(:f) { Muddle::Filter::BoilerplateStyleElement }
+  context "with a minimal email" do
+    subject { Muddle::Filter::BoilerplateStyleElement.filter(minimal_email_body) }
 
-  it "can parse full documents" do
-    output = f.filter(minimal_email_body)
-
-    xpath(output, 'html/body/style').count.should eql(1)
+    it "inserts the boilerplate css that's not meant to be inlined" do
+      xpath(subject, 'html/body/style').count.should eql(1)
+    end
   end
 
-  it "inserts a <body> element if missing" do
-    output = f.filter('<html><body>woot</body></html>')
-    output.should have_xpath('html/body')
+  context "with a style tag in the body" do
+    subject { Muddle::Filter::BoilerplateStyleElement.filter('<html><body><style></style></body></html>') }
+
+    it "adds a second style tag" do
+      xpath(subject, 'html/body/style').count.should eql(2)
+    end
+
+    it "inserts a style with type text/css" do
+      xpath(subject, 'html/body/style').first.attribute('type').value.should == 'text/css'
+    end
+
+    it "inserts the boilerplate css into the first style tag" do
+      xpath(subject, 'html/body/style').first.content.should include("Boilerplate CSS for HEAD")
+    end
   end
 
-  it "inserts a style declaration for non-inlined styles if <body> found" do
-    f.filter('<html><body></body></html>').should have_xpath('html/body/style')
+  context "with no style tag in the body" do
+    subject { Muddle::Filter::BoilerplateStyleElement.filter('<html><body></body></html>') }
+
+    it "adds a second style tag" do
+      xpath(subject, 'html/body/style').count.should eql(1)
+    end
+
+    it "inserts a style with type text/css" do
+      xpath(subject, 'html/body/style').first.attribute('type').value.should == 'text/css'
+    end
+
+    it "inserts the boilerplate css into the first style tag" do
+      xpath(subject, 'html/body/style').first.content.should include("Boilerplate CSS for HEAD")
+    end
   end
 end
