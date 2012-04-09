@@ -30,7 +30,7 @@ describe Muddle do
   end
 
   describe ".configure" do
-    it "yields a Muddle::Configureation object" do
+    it "yields a Muddle::Configuration object" do
       Muddle.configure do |config|
         config.should be_a(Muddle::Configuration)
       end
