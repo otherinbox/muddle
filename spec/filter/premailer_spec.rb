@@ -17,7 +17,6 @@ describe Muddle::Filter::Premailer do
 
   it "preserves custom DTD's" do
     output = f.filter(email_body_with_custom_dtd)
-    puts output
 
     Nokogiri::XML(output).internal_subset.to_s.should == "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\">"
   end
