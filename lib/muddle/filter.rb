@@ -37,18 +37,6 @@ module Muddle::Filter
     prepend_or_insert(doc, opts[:with]) if doc.search(selector).empty?
     yield doc.search(selector)
   end
-
-  # Insert content before `selector` within `doc` if the selector matches.  If
-  # it doesn't match, add the block as the first child of `doc`
-  #
-  # yields to block and returns
-  def before_or_prepend(doc, selector, &block)
-    if node = doc.search(selector)
-      node.before( block.call )
-    else
-      doc.prepend( block.call )
-    end
-  end
 end
 
 require 'muddle/filter/boilerplate_attributes'
