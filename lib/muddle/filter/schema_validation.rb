@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 module Muddle::Filter::SchemaValidation
   def self.filter(body_string)
     doc = Nokogiri::XML(body_string)

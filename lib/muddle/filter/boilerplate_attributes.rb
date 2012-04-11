@@ -1,8 +1,8 @@
-require 'nokogiri'
+require 'hpricot'
 
 module Muddle::Filter::BoilerplateAttributes
   def self.filter(body_string)
-    doc = Nokogiri::XML(body_string)
+    doc = Hpricot(body_string)
 
     ensure_node_includes(doc, 'table', 'cellpadding', '0')
     ensure_node_includes(doc, 'table', 'cellspacing', '0')
@@ -13,12 +13,12 @@ module Muddle::Filter::BoilerplateAttributes
 
     ensure_node_includes(doc, 'a', 'target', '_blank')
 
-    doc.to_xhtml
+    doc.to_html
   end
 
   def self.ensure_node_includes(doc, element_selector, attribute, default_value)
-    doc.css("#{element_selector}:not([#{attribute}])").each do |node|
-      node[attribute] = default_value
+    doc.search("#{element_selector}:not([@#{attribute}])").each do |node|
+      node.attributes[attribute] = default_value
     end
   end
 end

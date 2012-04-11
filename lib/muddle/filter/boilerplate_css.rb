@@ -1,6 +1,8 @@
-require 'nokogiri'
+require 'hpricot'
 
 module Muddle::Filter::BoilerplateCSS
+  extend Muddle::Filter
+
   # Boilerplate CSS Filter
   #
   # Inserts a style tag containing the boilerplate CSS - we assume that this will
@@ -13,48 +15,25 @@ module Muddle::Filter::BoilerplateCSS
   # CSS will over-write our boilerplate stuff
   #
   def self.filter(body_string)
-    doc = Nokogiri::XML(body_string)
+    doc = Hpricot(body_string)
 
     insert_styles_to_inline(doc)
 
-    doc.to_xhtml
+    doc.to_html
   end
 
   def self.insert_styles_to_inline(doc)
-    if style_node = doc.css('html head style').first
-      add_style_tag_before(style_node)
-    elsif head_node = doc.css('html head').first
-      add_style_tag_to(head_node)
-    elsif html_node = doc.css('html').first
-      head_node = html_node.first_element_child.add_previous_sibling('<head></head>').first
-      add_style_tag_to(head_node)
-    else
-      raise "HTML Parsing error - <html> element not found"
+    find_or_append(doc, 'html', :with => '<html></html>') do |html|
+      find_or_prepend(html.first, 'head', :with => '<head></head>') do |head|
+        if node = head.search('style:first-of-type()').first
+          node.before('<style type="text/css"></style>')
+        else
+          prepend_or_insert(head.first, '<style type="text/css"></style>')
+        end
+        
+        head.search('style:first-of-type()').inner_html(boilerplate_css)
+      end
     end
-  end
-
-  # Insert the style tag before the passed node
-  #
-  def self.add_style_tag_before(style_node)
-    new_style_node = style_node.add_previous_sibling('<style type="text/css"></style>').first
-    build_style_tag_with(new_style_node)
-  end
-
-  # Insert the style tag as a child of the passed node
-  #
-  def self.add_style_tag_to(head_node)
-    if first_child = head_node.first_element_child
-      add_style_tag_before(first_child)
-    else
-      style_node = head_node.add_child('<style type="text/css"></style>').first
-      build_style_tag_with(style_node)
-    end
-  end
-
-  # Insert the CSS content
-  #
-  def self.build_style_tag_with(style_node)
-    style_node.content = boilerplate_css
   end
 
   def self.boilerplate_css
