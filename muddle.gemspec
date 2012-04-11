@@ -4,8 +4,8 @@ require File.expand_path('../lib/muddle/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Ryan Michael", "Ben Hamill"]
   gem.email         = ["git-commits@benhamill.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Email clients are not web browsers. They render html all funny, to put it politely. In general, the best practices for writing HTML that will look good in an email are the exact inverse from those that you should use for a web page. Remembering all those differences sucks.}
+  gem.summary       = %q{Never type all the annoying markup that emails demand again.}
   gem.homepage      = "http://github.com/otherinbox/muddle"
 
   gem.files         = `git ls-files`.split($\)

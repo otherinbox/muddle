@@ -120,4 +120,17 @@ describe Muddle::Parser do
       Muddle::Filter::SchemaValidation.should_not_receive(:filter).with('email')
     end
   end
+
+  describe "example html5 email" do
+    let(:output) {Muddle.parse(html5_email)}
+
+    it "displays the output" do
+      pending
+      puts output
+    end
+
+    it "doesn't vomit" do
+      output.should have_xpath('html/body/style')
+    end
+  end
 end
