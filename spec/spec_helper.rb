@@ -94,3 +94,9 @@ end
 def html5_email
   File.read(File.join(File.dirname(__FILE__), 'resources', 'html5_email.html'))
 end
+
+def reset_muddle_module
+  %W(@config @parser).each do |var|
+    Muddle.instance_variable_set(var, nil)
+  end
+end
