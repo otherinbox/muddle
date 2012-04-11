@@ -213,12 +213,9 @@ Muddle will spit out this:
 
 ## To Do
 
-* validate before any filters run, log errors if the structure isn't correct
 * naughty tag warnings
-* build example Rails app, test integration with actual mailers
 * Rails logging integration
 * performance tests
-* improve README
 * test external CSS resource handling
 * test if premailer is making image URI's absolute where possible
 * complain about images with relative urls
