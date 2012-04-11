@@ -23,11 +23,29 @@ render it.
 
 ### Rails
 
-In your `Gemfile`:
+You have two options with Rails.  The first is to let Muddle parse anything
+sent by ActiveMailer.  If you'd like to do this, add the following to your `Gemfile`:
 
     gem 'muddle', require: 'muddle/rails'
 
-And then execute:
+You can also use Muddle on a case-by-case basis by explicitly parsing the
+mailer body. In this case you'll want to add the following to your `Gemfile`:
+
+    gem 'muddle'
+
+And set up your mailer something like this:
+
+``` ruby
+class MyMailer < ActionMailer::Base
+  def make_it_so
+    mail(:to => 'someone@domain.com', :from => 'me@domain.com', :subject => 'Howdy') do |format|
+      format.html { Muddle.parse( render ) }
+    end
+  end
+end
+```
+
+Either way, you'll want to execute:
 
     $ bundle
 
