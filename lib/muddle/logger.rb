@@ -1,0 +1,2 @@
+module Muddle::Logger
+end
