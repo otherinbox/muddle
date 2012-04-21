@@ -8,14 +8,18 @@ describe Muddle::Logger do
   end
 
   context "when a logger is configured" do
-    logger { double('logger', :error => true) }
-    config { double('config', :logger => logger) }
+    let(:logger) { double('logger', :error => true) }
+    let(:config) { double('config', :logger => logger) }
 
     before(:each) do
-      Muddle.
+      Muddle.stub!(:config) { config }
     end
 
     after(:each) do
+      described_class.log(:error, 'logging yeah')
+    end
+
+    it "uses the configured logger" do
       logger.should_receive(:error).with('logging yeah')
     end
   end
