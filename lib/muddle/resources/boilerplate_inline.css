@@ -1,16 +1,16 @@
 
 /* Boilerplate CSS for Inlining */
 
-body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;} 
+body{width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;} 
 
 img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;} 
 a img {border:none;} 
 
 p {margin: 1em 0;}
 
-h1, h2, h3, h4, h5, h6 {color: black !important;}
+h1, h2, h3, h4, h5, h6 {color: black;}
 
-h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue;}
 
 a {color: blue;}
 
