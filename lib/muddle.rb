@@ -6,6 +6,7 @@ require "muddle/version"
 require "muddle/filter"
 require "muddle/parser"
 require "muddle/configuration"
+require 'muddle/logger'
 
 module Muddle
   # Top-level configuration function

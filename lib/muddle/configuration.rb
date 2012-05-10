@@ -5,6 +5,7 @@ class Muddle::Configuration
   attr_accessor :insert_boilerplate_attributes
   attr_accessor :validate_html
   attr_accessor :generate_plain_text
+  attr_accessor :logger
 
   attr_accessor :premailer_options
 
@@ -13,12 +14,13 @@ class Muddle::Configuration
   # if a block is passed, we'll yield 'this' to it so you can set config values
   #
   def initialize(options = {})
-    @parse_with_premailer = options[:parse_with_premailer] || true
-    @insert_boilerplate_styles = options[:insert_boilerplate_styles] || true
-    @insert_boilerplate_css = options[:insert_boilerplate_css] || true
+    @parse_with_premailer          = options[:parse_with_premailer]          || true
+    @insert_boilerplate_styles     = options[:insert_boilerplate_styles]     || true
+    @insert_boilerplate_css        = options[:insert_boilerplate_css]        || true
     @insert_boilerplate_attributes = options[:insert_boilerplate_attributes] || true
-    @validate_html = options[:validate_html] || true
-    @generate_plain_text = options[:generate_plain_text] || false
+    @validate_html                 = options[:validate_html]                 || true
+    @generate_plain_text           = options[:generate_plain_text]           || false
+    @logger                        = options[:logger]
 
     # NOTE: when this tries to inline CSS, all it sees is a stylesheet URL
     # This may require that we download css from the interwebs @ each render
