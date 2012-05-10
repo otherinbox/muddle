@@ -7,7 +7,7 @@ module Muddle::Filter::Premailer
     warn "Premailer generated #{premailer.warnings.length.to_s} warnings:" unless premailer.warnings.empty?
 
     premailer.warnings.each do |w|
-      puts "#{w[:message]} (#{w[:level]}) may not render properly in #{w[:clients]}"
+      warn "#{w[:message]} (#{w[:level]}) may not render properly in #{w[:clients]}"
     end
 
     premailer.to_inline_css
