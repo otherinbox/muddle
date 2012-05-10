@@ -8,6 +8,7 @@ describe Muddle::Configuration do
     its(:insert_boilerplate_attributes) { should be_true }
     its(:validate_html) { should be_true }
     its(:generate_plain_text) { should be_false }
+    its(:logger) { should be_nil }
 
     describe "premailer_options" do
       subject { Muddle::Configuration.new.premailer_options }
@@ -19,6 +20,8 @@ describe Muddle::Configuration do
   end
 
   context "with some custom options" do
+    let(:logger) { double('logger') }
+
     subject do
       Muddle::Configuration.new.configure do |config|
         config.parse_with_premailer = false
@@ -27,6 +30,7 @@ describe Muddle::Configuration do
         config.insert_boilerplate_attributes = false
         config.validate_html = false
         config.generate_plain_text = true
+        config.logger = logger
       end
     end
 
@@ -36,6 +40,7 @@ describe Muddle::Configuration do
     its(:insert_boilerplate_attributes) { should be_false }
     its(:validate_html) { should be_false }
     its(:generate_plain_text) { should be_true }
+    its(:logger) { should == logger }
 
     describe "premailer_options" do
       subject do
