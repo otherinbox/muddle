@@ -2,14 +2,14 @@
 /* Boilerplate CSS for HEAD */
 
 #outlook a {padding:0;}
-#backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+#backgroundTable {margin:0; padding:0; width:100%; line-height: 100%;}
 
 .ExternalClass {width:100%;}
 .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;}
 .image_fix {display:block;}
 
-h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {color: red !important;}
-h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {color: purple !important;}
+h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {color: red;}
+h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {color: purple;}
 
 @media only screen and (max-device-width: 480px) {
   a[href^="tel"], a[href^="sms"] {
@@ -20,7 +20,7 @@ h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visi
   }
   .mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {
     text-decoration: default;
-    color: orange !important;
+    color: orange;
     pointer-events: auto;
     cursor: default;
   }
@@ -34,7 +34,7 @@ h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visi
   }
   .mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {
     text-decoration: default;
-    color: orange !important;
+    color: orange;
     pointer-events: auto;
     cursor: default;
   }
