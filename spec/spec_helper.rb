@@ -3,7 +3,6 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), 'resources'))
 
 require 'muddle'
-require 'muddle/interceptor'
 
 require 'mail'
 require 'pry'
