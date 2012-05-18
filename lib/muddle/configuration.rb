@@ -26,7 +26,6 @@ class Muddle::Configuration
     # This may require that we download css from the interwebs @ each render
     # pass of a mailer ?!?!?
     @premailer_options = {
-      #:base_url => root_url, # Put in rails stuff...
       :remove_comments => true, # Env-dependent?
       :with_html_string => true,
       :adapter => :hpricot
