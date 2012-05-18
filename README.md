@@ -21,36 +21,6 @@ render it.
 
 ## Installation
 
-### Rails
-
-You have two options with Rails.  The first is to let Muddle parse anything
-sent by ActiveMailer.  If you'd like to do this, add the following to your `Gemfile`:
-
-    gem 'muddle', require: 'muddle/rails'
-
-You can also use Muddle on a case-by-case basis by explicitly parsing the
-mailer body. In this case you'll want to add the following to your `Gemfile`:
-
-    gem 'muddle'
-
-And set up your mailer something like this:
-
-``` ruby
-class MyMailer < ActionMailer::Base
-  def make_it_so
-    mail(:to => 'someone@domain.com', :from => 'me@domain.com', :subject => 'Howdy') do |format|
-      format.html { Muddle.parse( render ) }
-    end
-  end
-end
-```
-
-Either way, you'll want to execute:
-
-    $ bundle
-
-### Not Rails
-
 Add this line to your application's `Gemfile`:
 
     gem 'muddle'
@@ -66,15 +36,6 @@ Or install it yourself as:
 ## Usage
 
 ### The Basics
-
-#### Rails
-
-When you `require 'muddle/rails'`, Muddle will intercept all email you send,
-pull the html body out, run it through the muddler and replace that body with
-new, more muddled html. This will happen to all emails automatically without
-you having to do a thing.
-
-#### Not Rails
 
 However you're sending email, you'll want to get what you intend to be the html
 body of your email into a variable. How you do that is up to you. Say you have
@@ -103,11 +64,27 @@ email = Mail.new do
 end
 ```
 
+If you're using `ActionMailer`, you could do like this:
+
+``` ruby
+class MyMailer < ActionMailer::Base
+  def welcome_email
+    mail(
+      to: 'some_new_customer@gmail.com',
+      from: 'welcome@awesome_web_service.com',
+      subject: 'Welcome!!!!!!!!!!1!!!!one!!!'
+    ) do |format|
+      format.html { Muddle.parse(render) }
+    end
+  end
+end
+```
+
 ### Configuration
 
 You will see warning messages when you run your mailer tests when your emails
 contain something that's not recommended. You can silence them like so (maybe
-throw this in an initializer):
+throw this in an initializer of some sort):
 
 ```ruby
 Muddle.configure do |config|
@@ -214,7 +191,6 @@ Muddle will spit out this:
 ## To Do
 
 * naughty tag warnings
-* Rails logging integration
 * performance tests
 * test external CSS resource handling
 * test if premailer is making image URI's absolute where possible
@@ -224,11 +200,10 @@ Muddle will spit out this:
 * check for lines starting with a period
 
 
-
 ## Contributing
 
 1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Added some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
+2. Create your feature branch (`$ git checkout -b my-new-feature`)
+3. Commit your changes (`$ git commit -am 'Added some feature'`)
+4. Push to the branch (`$ git push origin my-new-feature`)
 5. Create new Pull Request
