@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = ['spec']
   gem.name          = "muddle"
   gem.require_paths = ["lib"]
-  gem.version       = Muddle::VERSION
+  gem.version       = Muddle.version
 
   gem.add_dependency 'premailer', '~> 1.7.3'
   gem.add_dependency 'nokogiri', '~> 1.5.0'
