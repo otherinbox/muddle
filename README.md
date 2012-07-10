@@ -21,36 +21,6 @@ render it.
 
 ## Installation
 
-### Rails
-
-You have two options with Rails.  The first is to let Muddle parse anything
-sent by ActiveMailer.  If you'd like to do this, add the following to your `Gemfile`:
-
-    gem 'muddle', require: 'muddle/rails'
-
-You can also use Muddle on a case-by-case basis by explicitly parsing the
-mailer body. In this case you'll want to add the following to your `Gemfile`:
-
-    gem 'muddle'
-
-And set up your mailer something like this:
-
-``` ruby
-class MyMailer < ActionMailer::Base
-  def make_it_so
-    mail(:to => 'someone@domain.com', :from => 'me@domain.com', :subject => 'Howdy') do |format|
-      format.html { Muddle.parse( render ) }
-    end
-  end
-end
-```
-
-Either way, you'll want to execute:
-
-    $ bundle
-
-### Not Rails
-
 Add this line to your application's `Gemfile`:
 
     gem 'muddle'
@@ -59,22 +29,13 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
+Or install it yourself with:
 
     $ gem install muddle
 
 ## Usage
 
 ### The Basics
-
-#### Rails
-
-When you `require 'muddle/rails'`, Muddle will intercept all email you send,
-pull the html body out, run it through the muddler and replace that body with
-new, more muddled html. This will happen to all emails automatically without
-you having to do a thing.
-
-#### Not Rails
 
 However you're sending email, you'll want to get what you intend to be the html
 body of your email into a variable. How you do that is up to you. Say you have
@@ -103,23 +64,50 @@ email = Mail.new do
 end
 ```
 
+If you're using `ActionMailer`, you could do like this:
+
+``` ruby
+class UserMailer < ActionMailer::Base
+  def welcome_email
+    mail(
+      to: 'some_new_customer@gmail.com',
+      from: 'welcome@awesome_web_service.com',
+      subject: 'Welcome!!!!!!!!!!1!!!!one!!!'
+    ) do |format|
+      format.html { Muddle.parse(render) }
+    end
+  end
+end
+```
+
 ### Configuration
 
-You will see warning messages when you run your mailer tests when your emails
-contain something that's not recommended. You can silence them like so (maybe
-throw this in an initializer):
+You can configure Muddle with a block. Maybe throw this in an
+initializer of some sort. Here are all the defaults:
 
 ```ruby
 Muddle.configure do |config|
-  config.silence_warnings = true
+  config.parse_with_premailer          = true
+  config.insert_boilerplate_styles     = true
+  config.insert_boilerplate_css        = true
+  config.insert_boilerplate_attributes = true
+  config.validate_html                 = true
+  config.generate_plain_text           = false
+  config.logger                        = nil
+
+  config.premailer_options = {
+    :remove_comments  => true,
+    :with_html_string => true,
+    :adapter          => :hpricot
+  }
 end
 ```
 
 ### Writing An Email
 
 For best results, just start writing your email with a table tag and move in
-from there. Muddler will handle putting the `xmlns` and `DOCTYPE` and a bunch of
-stuff into the `<head>`, then open the `<body>` for you. It will also close
+from there. Muddler will handle putting the `xmlns` and `DOCTYPE` and a bunch
+of stuff into the `<head>`, then open the `<body>` for you. It will also close
 these tags at the end.
 
 For example, if you have a template the ends up like this:
@@ -133,7 +121,7 @@ For example, if you have a template the ends up like this:
           <td><h1>Welcome to our AWESOME NEW WEB SERVICE!</h1></td>
         </tr>
         <tr>
-          <td><p>You should come <a href="http://example.com">check us out</a>.</p></td>
+          <td><p>You should come <a href="http://awesome_web_service.com">check us out</a>.</p></td>
         </tr>
       </tbody>
     </table>
@@ -155,7 +143,7 @@ Muddle will spit out this:
           <td valign="top"><h1 style="color: black !important;">Welcome to our AWESOME NEW WEB SERVICE!</h1></td>
         </tr>
         <tr>
-          <td valign="top"><p style="margin: 1em 0;">You should <a href="http://example.com" style="color: blue;" target="_blank">check us out</a>.</p></td>
+          <td valign="top"><p style="margin: 1em 0;">You should <a href="http://awesome_web_service.com" style="color: blue;" target="_blank">check us out</a>.</p></td>
         </tr>
       </tbody>
     </table>
@@ -214,7 +202,6 @@ Muddle will spit out this:
 ## To Do
 
 * naughty tag warnings
-* Rails logging integration
 * performance tests
 * test external CSS resource handling
 * test if premailer is making image URI's absolute where possible
@@ -224,11 +211,10 @@ Muddle will spit out this:
 * check for lines starting with a period
 
 
-
 ## Contributing
 
 1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Added some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
+2. Create your feature branch (`$ git checkout -b my-new-feature`)
+3. Commit your changes (`$ git commit -am 'Added some feature'`)
+4. Push to the branch (`$ git push origin my-new-feature`)
 5. Create new Pull Request
