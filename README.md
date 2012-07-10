@@ -29,7 +29,7 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
+Or install it yourself with:
 
     $ gem install muddle
 
@@ -67,7 +67,7 @@ end
 If you're using `ActionMailer`, you could do like this:
 
 ``` ruby
-class MyMailer < ActionMailer::Base
+class UserMailer < ActionMailer::Base
   def welcome_email
     mail(
       to: 'some_new_customer@gmail.com',
@@ -82,21 +82,32 @@ end
 
 ### Configuration
 
-You will see warning messages when you run your mailer tests when your emails
-contain something that's not recommended. You can silence them like so (maybe
-throw this in an initializer of some sort):
+You can configure Muddle with a block. Maybe throw this in an
+initializer of some sort. Here are all the defaults:
 
 ```ruby
 Muddle.configure do |config|
-  config.silence_warnings = true
+  config.parse_with_premailer          = true
+  config.insert_boilerplate_styles     = true
+  config.insert_boilerplate_css        = true
+  config.insert_boilerplate_attributes = true
+  config.validate_html                 = true
+  config.generate_plain_text           = false
+  config.logger                        = nil
+
+  config.premailer_options = {
+    :remove_comments  => true,
+    :with_html_string => true,
+    :adapter          => :hpricot
+  }
 end
 ```
 
 ### Writing An Email
 
 For best results, just start writing your email with a table tag and move in
-from there. Muddler will handle putting the `xmlns` and `DOCTYPE` and a bunch of
-stuff into the `<head>`, then open the `<body>` for you. It will also close
+from there. Muddler will handle putting the `xmlns` and `DOCTYPE` and a bunch
+of stuff into the `<head>`, then open the `<body>` for you. It will also close
 these tags at the end.
 
 For example, if you have a template the ends up like this:
