@@ -3,10 +3,10 @@ require File.expand_path('../lib/muddle/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Ryan Michael", "Ben Hamill"]
-  gem.email         = ["benhamill@otherinbox.com"]
+  gem.email         = ["ryanmichael@otherinbox.com", "benhamill@otherinbox.com"]
   gem.description   = %q{Email clients are not web browsers. They render html all funny, to put it politely. In general, the best practices for writing HTML that will look good in an email are the exact inverse from those that you should use for a web page. Remembering all those differences sucks.}
   gem.summary       = %q{Never type all the annoying markup that emails demand again.}
-  gem.homepage      = "http://github.com/otherinbox/muddle"
+  gem.homepage      = "http://otherinbox.github.com/muddle"
 
   gem.files         = `git ls-files -- lib/*`.split($\)
   gem.files        += %w(Gemfile LICENSE Rakefile README.md Changes.md)
