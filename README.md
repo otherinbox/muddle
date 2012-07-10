@@ -121,7 +121,7 @@ For example, if you have a template the ends up like this:
           <td><h1>Welcome to our AWESOME NEW WEB SERVICE!</h1></td>
         </tr>
         <tr>
-          <td><p>You should come <a href="http://example.com">check us out</a>.</p></td>
+          <td><p>You should come <a href="http://awesome_web_service.com">check us out</a>.</p></td>
         </tr>
       </tbody>
     </table>
@@ -143,7 +143,7 @@ Muddle will spit out this:
           <td valign="top"><h1 style="color: black !important;">Welcome to our AWESOME NEW WEB SERVICE!</h1></td>
         </tr>
         <tr>
-          <td valign="top"><p style="margin: 1em 0;">You should <a href="http://example.com" style="color: blue;" target="_blank">check us out</a>.</p></td>
+          <td valign="top"><p style="margin: 1em 0;">You should <a href="http://awesome_web_service.com" style="color: blue;" target="_blank">check us out</a>.</p></td>
         </tr>
       </tbody>
     </table>
