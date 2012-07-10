@@ -3,7 +3,6 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), 'resources'))
 
 require 'muddle'
-require 'muddle/interceptor'
 
 require 'mail'
 require 'pry'
@@ -43,7 +42,7 @@ def multi_part_email
   Mail.new do
     to 'you@you.com'
     from 'me@me.com'
-    subject 'Better emails in Rails'
+    subject 'Better emails in Ruby'
 
     html_part do
       content_type 'text/html; charset=UTF-8'
@@ -60,7 +59,7 @@ def html_email
   Mail.new do
     to 'you@you.com'
     from 'me@me.com'
-    subject 'Better emails in Rails'
+    subject 'Better emails in Ruby'
     content_type 'text/html; charset=UTF-8'
     body '<html><body><h1>Muddle is awesome!</h1></body></html>'
   end
@@ -70,7 +69,7 @@ def plaintext_email
   Mail.new do
     to 'you@you.com'
     from 'me@me.com'
-    subject 'Better emails in Rails'
+    subject 'Better emails in Ruby'
     body 'Muddle is pretty cool.'
   end
 end
