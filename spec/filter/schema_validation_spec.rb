@@ -12,6 +12,10 @@ describe Muddle::Filter::SchemaValidation do
       subject.should include("&#182;")
     end
 
+    it "converts named entities to numbered entities" do
+      subject.should include("&#174;")
+    end
+
     it "doesn't leave any special characters" do
       subject.should_not include "©"
       subject.should_not include "™"
