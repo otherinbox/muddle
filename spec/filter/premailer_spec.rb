@@ -1,6 +1,9 @@
 require 'spec_helper'
+require 'filter/unmodified_content'
 
 describe Muddle::Filter::Premailer do
+  include_examples "unmodified content in minimal email", described_class
+  
   context "with a minimal email" do
     subject { Muddle::Filter::Premailer.filter(minimal_email_body) }
 
